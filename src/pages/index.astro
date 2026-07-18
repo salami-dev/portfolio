@@ -1,7 +1,14 @@
 ---
 import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { getCollection } from "astro:content";
+
+const featuredProjects = (await getCollection("projects"))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.displayOrder - b.data.displayOrder)
+  .slice(0, 4);
 
 const metadata = buildPageMetadata({
   title: "Personal Engineering Portfolio",
@@ -83,8 +90,21 @@ const explorationTopics = [
   <section class="section content-shell" aria-labelledby="selected-work">
     <div class="section-heading">
       <p class="eyebrow">Selected work</p>
-      <h2 id="selected-work">Case studies will appear when there is something meaningful to inspect.</h2>
-      <p>The next entries here will be based on real systems, permitted details, working code, or substantive technical analysis.</p>
+      <h2 id="selected-work">A few examples of the kind of systems I have worked on.</h2>
+      <p>These are concise public summaries. They avoid private implementation details, but they show the shape of the ownership and technical work.</p>
+    </div>
+    <div class="selected-work-list">
+      {featuredProjects.map((project) => (
+        <article class="selected-work-card">
+          <div class="metadata-row">
+            <span>{formatStatus(project.data.status)}</span>
+            <span>{project.data.year}</span>
+          </div>
+          <h3>{project.data.title}</h3>
+          <p>{project.data.summary}</p>
+          <p class="owned"><strong>Owned:</strong> {project.data.role}</p>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -192,10 +212,45 @@ const explorationTopics = [
     padding: 0.45rem 0.7rem;
   }
 
+  .selected-work-list {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-7);
+  }
+
+  .selected-work-card {
+    display: grid;
+    gap: var(--space-3);
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    padding: var(--space-5);
+  }
+
+  .selected-work-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
+  }
+
+  .selected-work-card p {
+    color: var(--color-stone);
+  }
+
+  .selected-work-card .owned {
+    font-size: var(--text-body-s);
+  }
+
+  .selected-work-card strong {
+    color: var(--color-charcoal);
+  }
+
   @media (max-width: 900px) {
     .hero,
     .split-section,
-    .capability-grid {
+    .capability-grid,
+    .selected-work-list {
       grid-template-columns: 1fr;
     }
 

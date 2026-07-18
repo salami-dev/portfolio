@@ -10,9 +10,10 @@ declare global {
 test("homepage navigation and project links work", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /I build the product surface/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Audicin V2" })).toBeVisible();
   await page.getByRole("link", { name: "Explore my work" }).click();
   await expect(page).toHaveURL(/\/work\/$/);
-  await expect(page.getByRole("heading", { name: "Selected work belongs here when it can be inspected." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Selected work across product, backend, data, and infrastructure." })).toBeVisible();
 });
 
 test("mobile menu exposes primary navigation", async ({ page, isMobile }) => {
@@ -22,10 +23,11 @@ test("mobile menu exposes primary navigation", async ({ page, isMobile }) => {
   await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Contact" })).toBeVisible();
 });
 
-test("work page explains publishing criteria", async ({ page }) => {
+test("work page lists real project summaries", async ({ page }) => {
   await page.goto("/work/");
-  await expect(page.getByRole("heading", { name: "No fictional case studies." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Current build" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Audicin Web" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Bridger Web" })).toBeVisible();
+  await expect(page.getByText("Built backend systems for inventory financing")).toBeVisible();
 });
 
 test("keyboard focus can reach primary actions", async ({ page }) => {
