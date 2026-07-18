@@ -93,6 +93,21 @@ Required fields include:
 
 Do not publish invented metrics, outcomes, repository links, demos, users, customers, revenue, or scale.
 
+Projects may also define media:
+
+```yaml
+mainImage:
+  src: /images/example.jpg
+  alt: Short description of the image
+  caption: Optional visible caption
+supportingImages:
+  - src: /images/example-detail.jpg
+    alt: Short description of the supporting image
+    caption: Optional visible caption
+```
+
+If no project images are available, the public page renders the technical visual frame from `cover` instead.
+
 ## Adding A Note
 
 Add an MDX file in `src/content/notes`.

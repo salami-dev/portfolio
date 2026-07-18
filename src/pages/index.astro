@@ -3,6 +3,7 @@ import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { workPath } from "@lib/routing/urls";
 import { getCollection } from "astro:content";
 
 const featuredProjects = (await getCollection("projects"))
@@ -100,7 +101,7 @@ const explorationTopics = [
             <span>{formatStatus(project.data.status)}</span>
             <span>{project.data.year}</span>
           </div>
-          <h3>{project.data.title}</h3>
+          <h3><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
           <p>{project.data.summary}</p>
           <p class="owned"><strong>Owned:</strong> {project.data.role}</p>
         </article>
@@ -232,6 +233,15 @@ const explorationTopics = [
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 400;
+  }
+
+  .selected-work-card h3 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .selected-work-card h3 a:hover {
+    color: var(--color-forest);
   }
 
   .selected-work-card p {

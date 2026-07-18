@@ -30,6 +30,17 @@ test("work page lists real project summaries", async ({ page }) => {
   await expect(page.getByText("Built backend systems for inventory financing")).toBeVisible();
 });
 
+test("project story pages support images and fallback media", async ({ page }) => {
+  await page.goto("/work/audicin-web/");
+  await expect(page.getByRole("heading", { name: "Audicin Web" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Audicin web application interface." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "What the work covered" })).toBeVisible();
+
+  await page.goto("/work/bridger-web/");
+  await expect(page.getByRole("heading", { name: "Bridger Web" })).toBeVisible();
+  await expect(page.getByRole("img", { name: /inventory financing workflows/i })).toBeVisible();
+});
+
 test("keyboard focus can reach primary actions", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Tab");

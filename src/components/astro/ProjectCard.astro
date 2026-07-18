@@ -13,7 +13,11 @@ const { project } = Astro.props;
 <article class="project-card">
   <a class="project-card__link" href={workPath(project.data.slug)} aria-label={`View ${project.data.title} case study`}>
     <div class="project-card__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
-      <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
+      {project.data.mainImage ? (
+        <img src={project.data.mainImage.src} alt="" loading="lazy" decoding="async" />
+      ) : (
+        <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
+      )}
     </div>
     <div class="project-card__body">
       <p class="eyebrow">{formatStatus(project.data.status)}</p>
@@ -74,6 +78,12 @@ const { project } = Astro.props;
     font-family: var(--font-mono);
     font-size: var(--text-mono-s);
     text-align: center;
+  }
+
+  .project-card__visual img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
   }
 
   .project-card__body {

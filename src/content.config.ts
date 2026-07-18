@@ -19,6 +19,12 @@ const sharedVisualSchema = z
   })
   .optional();
 
+const projectImageSchema = z.object({
+  src: z.string().startsWith("/"),
+  alt: z.string(),
+  caption: z.string().optional()
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/projects" }),
   schema: z.object({
@@ -34,6 +40,8 @@ const projects = defineCollection({
     repository: linkSchema,
     demo: linkSchema,
     cover: sharedVisualSchema,
+    mainImage: projectImageSchema.optional(),
+    supportingImages: z.array(projectImageSchema).default([]),
     complexity: z.string(),
     role: z.string(),
     year: z.string(),

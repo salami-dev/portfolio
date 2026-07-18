@@ -2,6 +2,7 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { workPath } from "@lib/routing/urls";
 import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.displayOrder - b.data.displayOrder);
@@ -29,14 +30,18 @@ const metadata = buildPageMetadata({
       {projects.map((project) => (
         <article class="work-entry">
           <div class="work-entry__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
-            <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
+            {project.data.mainImage ? (
+              <img src={project.data.mainImage.src} alt="" loading="lazy" decoding="async" />
+            ) : (
+              <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
+            )}
           </div>
           <div class="work-entry__body">
             <div class="metadata-row">
               <span>{formatStatus(project.data.status)}</span>
               <span>{project.data.year}</span>
             </div>
-            <h2>{project.data.title}</h2>
+            <h2><a href={workPath(project.data.slug)}>{project.data.title}</a></h2>
             <p class="summary">{project.data.summary}</p>
             <p>{project.data.thesis}</p>
             <dl>
@@ -52,6 +57,7 @@ const metadata = buildPageMetadata({
             <div class="tag-list" aria-label={`Disciplines for ${project.data.title}`}>
               {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
             </div>
+            <a class="story-link" href={workPath(project.data.slug)}>Read project story</a>
           </div>
         </article>
       ))}
@@ -111,6 +117,12 @@ const metadata = buildPageMetadata({
     text-align: center;
   }
 
+  .work-entry__visual img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
   .work-entry__body {
     display: grid;
     gap: var(--space-4);
@@ -119,6 +131,15 @@ const metadata = buildPageMetadata({
 
   .work-entry h2 {
     font-size: clamp(1.45rem, 3vw, 2rem);
+  }
+
+  .work-entry h2 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .work-entry h2 a:hover {
+    color: var(--color-forest);
   }
 
   .summary {
@@ -147,6 +168,12 @@ const metadata = buildPageMetadata({
   dd {
     margin: 0;
     color: var(--color-stone);
+  }
+
+  .story-link {
+    justify-self: start;
+    color: var(--color-forest);
+    font-weight: 700;
   }
 
   .work-panel p:not(.eyebrow),
