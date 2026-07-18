@@ -30,8 +30,8 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     slug: z.string(),
-    summary: z.string(),
-    thesis: z.string(),
+    context: z.string(),
+    impact: z.string(),
     disciplines: z.array(disciplineSchema).min(1),
     status: statusSchema,
     featured: z.boolean().default(false),
@@ -44,7 +44,6 @@ const projects = defineCollection({
     supportingImages: z.array(projectImageSchema).default([]),
     complexity: z.string(),
     role: z.string(),
-    year: z.string(),
     displayOrder: z.number().int().nonnegative().default(100)
   })
 });

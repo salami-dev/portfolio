@@ -1,17 +1,22 @@
 ---
-import { formatStatus } from "@lib/content/status";
 import { workPath } from "@lib/routing/urls";
 import type { CollectionEntry } from "astro:content";
 
+type CardVariant = "home" | "featured" | "supporting";
+
 type Props = {
   project: CollectionEntry<"projects">;
+  variant: CardVariant;
 };
 
-const { project } = Astro.props;
+const { project, variant } = Astro.props;
+const isFeatured = variant === "featured";
+const headingClass = variant === "home" ? "project-card__title project-card__title--home" : "project-card__title";
+const linkLabel = variant === "supporting" ? "Read project" : "Read case study";
 ---
 
-<article class="project-card">
-  <a class="project-card__link" href={workPath(project.data.slug)} aria-label={`View ${project.data.title} case study`}>
+<article class:list={["project-card", `project-card--${variant}`]} data-project-card data-card-variant={variant}>
+  {isFeatured && (
     <div class="project-card__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
       {project.data.mainImage ? (
         <img src={project.data.mainImage.src} alt="" loading="lazy" decoding="async" />
@@ -19,61 +24,59 @@ const { project } = Astro.props;
         <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
       )}
     </div>
-    <div class="project-card__body">
-      <p class="eyebrow">{formatStatus(project.data.status)}</p>
-      <h3>{project.data.title}</h3>
-      <p>{project.data.thesis}</p>
-      <div class="tag-list" aria-label="Disciplines">
-        {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
-      </div>
-      <p class="complexity"><strong>The hard part:</strong> {project.data.complexity}</p>
-      <span class="case-link">View case study -></span>
+  )}
+
+  <div class="project-card__body">
+    {variant === "home" ? (
+      <h3 class={headingClass}><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
+    ) : (
+      <h2 class={headingClass}><a href={workPath(project.data.slug)}>{project.data.title}</a></h2>
+    )}
+
+    <p class="project-card__context">{project.data.context}</p>
+    <p class="project-card__contribution">{project.data.role}</p>
+    <p class="project-card__impact"><strong>Impact:</strong> {project.data.impact}</p>
+
+    <div class="tag-list" aria-label={`Disciplines for ${project.data.title}`}>
+      {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
     </div>
-  </a>
+
+    <p class="project-card__challenge"><strong>Key challenge:</strong> {project.data.complexity}</p>
+    <a class="project-card__link" href={workPath(project.data.slug)}>{linkLabel} →</a>
+  </div>
 </article>
 
 <style>
   .project-card {
-    container-type: inline-size;
-  }
-
-  .project-card__link {
-    display: grid;
-    height: 100%;
     overflow: hidden;
     border: 1px solid var(--color-sand);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     background: var(--color-paper);
-    color: var(--color-charcoal);
-    text-decoration: none;
-    transition:
-      border-color var(--duration-base) var(--ease-standard),
-      box-shadow var(--duration-base) var(--ease-standard);
   }
 
-  .project-card__link:hover {
-    border-color: var(--color-forest);
-    box-shadow: var(--shadow-soft);
-    color: var(--color-charcoal);
+  .project-card--featured {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.35fr) minmax(0, 1fr);
+  }
+
+  .project-card--home,
+  .project-card--supporting {
+    height: 100%;
   }
 
   .project-card__visual {
     display: grid;
-    min-height: 220px;
+    min-block-size: 100%;
     place-items: center;
-    border-bottom: 1px solid var(--color-sand);
+    border-inline-end: 1px solid var(--color-sand);
     background:
-      radial-gradient(circle at 30% 35%, rgb(15 118 110 / 0.12), transparent 28%),
-      linear-gradient(135deg, var(--color-mist), var(--color-paper));
-    transition: transform var(--duration-base) var(--ease-standard);
-  }
-
-  .project-card__link:hover .project-card__visual {
-    transform: translateY(-4px);
+      linear-gradient(135deg, rgb(15 118 110 / 0.1), transparent 45%),
+      linear-gradient(160deg, var(--color-mist), var(--color-paper));
+    padding: var(--space-5);
   }
 
   .project-card__visual span {
-    max-width: 24ch;
+    max-inline-size: 22ch;
     color: var(--color-stone);
     font-family: var(--font-mono);
     font-size: var(--text-mono-s);
@@ -88,27 +91,70 @@ const { project } = Astro.props;
 
   .project-card__body {
     display: grid;
+    align-content: start;
     gap: var(--space-4);
     padding: var(--space-5);
   }
 
-  .project-card h3 {
+  .project-card__title {
     font-family: var(--font-display);
-    font-size: clamp(1.65rem, 8cqi, 2.2rem);
+    font-size: clamp(1.45rem, 3vw, 2rem);
     font-weight: 400;
   }
 
-  .complexity {
-    color: var(--color-stone);
-    font-size: var(--text-body-s);
+  .project-card__title--home {
+    font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .complexity strong {
+  .project-card__title a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .project-card__title a:hover {
+    color: var(--color-forest);
+  }
+
+  .project-card__context {
+    color: var(--color-charcoal);
+    font-size: var(--text-body-l);
+  }
+
+  .project-card__contribution,
+  .project-card__challenge {
+    color: var(--color-stone);
+  }
+
+  .project-card__impact {
+    border-inline-start: 3px solid var(--color-copper);
+    color: var(--color-charcoal);
+    padding-inline-start: var(--space-3);
+  }
+
+  .project-card__impact strong,
+  .project-card__challenge strong {
     color: var(--color-charcoal);
   }
 
-  .case-link {
+  .project-card__challenge {
+    font-size: var(--text-body-s);
+  }
+
+  .project-card__link {
+    justify-self: start;
     color: var(--color-forest);
     font-weight: 700;
+  }
+
+  @media (max-width: 820px) {
+    .project-card--featured {
+      grid-template-columns: 1fr;
+    }
+
+    .project-card__visual {
+      min-block-size: 180px;
+      border-inline-end: 0;
+      border-block-end: 1px solid var(--color-sand);
+    }
   }
 </style>

@@ -1,32 +1,27 @@
 ---
 title: "Sproutly Bursary"
 slug: "sproutly-bursary"
-summary: "Architecture, payments, backend contributions, infrastructure, and deployment operations for tuition-payment workflows."
-thesis: "Payment products need clear domain boundaries around workflow state, payment behavior, operational recovery, and the product experience."
+context: "Sproutly Bursary gave users a managed product workflow for making and tracking tuition payments."
+impact: "Replaced fragmented payment states with a consistent tuition-payment lifecycle and explicit recovery paths."
 disciplines:
+  - Payments
   - Backend Systems
-  - Cloud Infrastructure
-  - Reliability
-  - Security
-  - Architecture
-  - Product Systems
+  - Cloud Delivery
 status: "complete"
 featured: false
 publishedAt: 2026-07-18
 cover:
   alt: "Technical frame representing tuition-payment workflows, backend services, payments, and infrastructure."
   label: "Tuition payments + backend architecture"
-complexity: "Designing payment workflow architecture while contributing to backend implementation and production infrastructure."
-role: "Architecture, payments, backend contributions, DevOps, and infrastructure."
-year: "Professional work"
+complexity: "Representing partially completed payments so users and operators could distinguish progress, failure, and recovery."
+role: "I worked on the architecture, payment behaviour, backend implementation, DevOps, and infrastructure."
 displayOrder: 7
 ---
 
-## Scope
+## Tuition-payment workflow
 
-Sproutly Bursary covered tuition-payment workflows, architecture, payments, backend contributions, infrastructure, and deployment operations.
+The product supported tuition payments from initiation through backend processing and operational handling. My scope covered architecture, payment behavior, backend contributions, and the delivery environment.
 
-## The hard part
+## Recovery state
 
-Payment workflows need explicit state, reliable recovery paths, and a product experience that does not hide operational complexity from the people responsible for resolving issues.
-
+A payment could be started without every downstream step completing successfully. The workflow needed explicit state so users and operators could distinguish progress, failure, and the actions available for recovery.

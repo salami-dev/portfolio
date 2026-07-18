@@ -18,21 +18,16 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const mainImage = project.data.mainImage;
 const supportingImages = project.data.supportingImages ?? [];
-const pageEyebrow = project.data.featured ? "Case study" : "Project detail";
 const metadata = buildPageMetadata({
   title: project.data.title,
-  description: project.data.summary,
+  description: project.data.context,
   path: workPath(project.data.slug),
   ogType: "article",
   image: mainImage?.src
 });
 ---
 
-<ContentLayout metadata={metadata} eyebrow={pageEyebrow} title={project.data.title} summary={project.data.summary}>
-  <div slot="meta" class="project-meta">
-    <span>{project.data.year}</span>
-  </div>
-
+<ContentLayout metadata={metadata} title={project.data.title} summary={project.data.context}>
   <section class="project-hero-media" aria-labelledby="project-media-heading">
     <h2 id="project-media-heading" class="visually-hidden">Project media</h2>
     {mainImage ? (
@@ -48,18 +43,15 @@ const metadata = buildPageMetadata({
   </section>
 
   <section class="project-brief" aria-labelledby="project-brief-heading">
-    <div>
-      <p class="eyebrow">Technical focus</p>
-      <h2 id="project-brief-heading">{project.data.thesis}</h2>
-    </div>
+    <h2 id="project-brief-heading" class="visually-hidden">Project brief</h2>
     <dl>
       <div>
         <dt>Responsibility</dt>
         <dd>{project.data.role}</dd>
       </div>
       <div>
-        <dt>The hard part</dt>
-        <dd>{project.data.complexity}</dd>
+        <dt>Impact</dt>
+        <dd>{project.data.impact}</dd>
       </div>
       <div>
         <dt>Disciplines</dt>
@@ -76,8 +68,7 @@ const metadata = buildPageMetadata({
 
   {supportingImages.length > 0 && (
     <section class="supporting-media" aria-labelledby="supporting-media-heading">
-      <p class="eyebrow">Supporting media</p>
-      <h2 id="supporting-media-heading">Additional project context</h2>
+      <h2 id="supporting-media-heading">Screens and diagrams</h2>
       <div class="supporting-media__grid">
         {supportingImages.map((image) => (
           <figure class="project-image">
@@ -91,15 +82,6 @@ const metadata = buildPageMetadata({
 </ContentLayout>
 
 <style>
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    color: var(--color-stone);
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-  }
-
   .project-hero-media {
     margin-bottom: var(--space-7);
   }
@@ -157,10 +139,6 @@ const metadata = buildPageMetadata({
     gap: var(--space-5);
     margin-bottom: var(--space-7);
     padding: var(--space-5);
-  }
-
-  .project-brief h2 {
-    font-size: clamp(1.6rem, 3vw, 2.35rem);
   }
 
   dl {

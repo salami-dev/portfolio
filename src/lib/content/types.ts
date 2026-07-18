@@ -1,8 +1,13 @@
 export const disciplines = [
   "Interface Engineering",
+  "Frontend Engineering",
   "Backend Systems",
+  "Backend Architecture",
+  "Backend Services",
   "Data Engineering",
+  "Health Data",
   "Cloud Infrastructure",
+  "Cloud Delivery",
   "Reliability",
   "Performance",
   "Security",
@@ -14,7 +19,8 @@ export const disciplines = [
   "Reliability and Performance",
   "Product Design",
   "Platform Engineering",
-  "Domain Modelling"
+  "Domain Modelling",
+  "Payments"
 ] as const;
 
 export type Discipline = (typeof disciplines)[number];

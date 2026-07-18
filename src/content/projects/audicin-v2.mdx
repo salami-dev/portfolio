@@ -1,30 +1,27 @@
 ---
-title: "Audicin V2 — Rebuilding the platform behind an audio-health product"
+title: "Audicin V2"
 slug: "audicin-v2"
-summary: "Backend redesign, wearable health integration, infrastructure, and deployment operations for the second major version of Audicin."
-thesis: "The work connected product requirements, health-device data, backend service design, and production infrastructure without treating those concerns as separate projects."
+context: "Audicin is an audio-health product that combines guided listening experiences with physiological and behavioural data to support user wellbeing."
+impact: "Established the platform foundation for the V2 launch, improved onboarding, and enabled the redesigned subscription experience."
 disciplines:
-  - Backend Systems
-  - Data Engineering
-  - Cloud Infrastructure
-  - Reliability
-  - Architecture
+  - Backend Architecture
+  - Health Data
+  - Platform Engineering
 status: "complete"
 featured: true
 publishedAt: 2026-07-18
 cover:
   alt: "Technical frame representing backend services, wearable health integration, infrastructure, and observability."
   label: "Backend redesign + wearable integration"
-complexity: "Redesigning backend boundaries while integrating wearable health data and keeping deployment and infrastructure concerns explicit."
-role: "Backend redesign, wearable health integration, DevOps, and infrastructure. Mobile app implementation was outside scope."
-year: "Professional work"
+complexity: "Processing health records that could arrive late, overlap, or be revised after ingestion without coupling the core platform to individual device providers."
+role: "I led the backend redesign, wearable-data integration, delivery infrastructure, and production operations for its second major release."
 displayOrder: 1
 ---
 
-## Scope
+## System boundary
 
-Audicin V2 involved backend redesign work, wearable health integration, infrastructure, and deployment operations behind the mobile product surface.
+The mobile product depended on backend services that also received device-originated health data. The platform needed a clear boundary between mobile-client behavior, wearable-data ingestion, backend processing, and production operations.
 
-## The hard part
+## Wearable-data integration
 
-The work required backend boundaries that could support product behavior, health-related integration flows, deployment reliability, and infrastructure maintenance at the same time.
+Wearable sources do not necessarily describe health records in the same shape or deliver them on the same schedule. The backend redesign had to accommodate those integration differences while preserving data the product could use and the team could operate in production.

@@ -1,14 +1,12 @@
 ---
 import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
+import ProjectCard from "@components/astro/ProjectCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { buildProjectPortfolio } from "@lib/content/projects";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
-import { workPath } from "@lib/routing/urls";
 import { getCollection } from "astro:content";
 
-const featuredProjects = (await getCollection("projects"))
-  .filter((project) => project.data.featured)
-  .sort((a, b) => a.data.displayOrder - b.data.displayOrder)
-  .slice(0, 4);
+const { featured: featuredProjects } = buildProjectPortfolio(await getCollection("projects"));
 
 const metadata = buildPageMetadata({
   title: "Bashir Salami — Software Engineer & Technical Leader",
@@ -40,11 +38,11 @@ const capabilityAreas = [
   <section class="hero content-shell">
     <div class="hero__copy">
       <p class="eyebrow">SOFTWARE ENGINEER · TECHNICAL LEADER</p>
-      <h1>Product interfaces and the systems behind them.</h1>
-      <p class="lede">Software engineering across frontend, backend, data, cloud infrastructure, and production operations, with attention to how those layers behave as one product system.</p>
+      <h1>I build the product surface and the systems behind it.</h1>
+      <p class="lede">I design and ship software across frontend, backend, data, cloud infrastructure, and production operations. I am most useful when a problem crosses those boundaries.</p>
       <div class="hero__actions">
-        <a class="button button-primary" href="/work/">View selected work</a>
-        <a class="button button-secondary" href="/about/">Working approach</a>
+        <a class="button button-primary" href="/work/">View work</a>
+        <a class="button button-secondary" href="/about/">How I work</a>
       </div>
     </div>
     <TechnicalHeroVisual />
@@ -52,9 +50,8 @@ const capabilityAreas = [
 
   <section class="section content-shell" aria-labelledby="engineering-system">
     <div class="section-heading">
-      <p class="eyebrow">Across the system</p>
-      <h2 id="engineering-system">Product behavior and system behavior are usually connected.</h2>
-      <p>User workflows, backend state, data movement, deployment, and observability all shape the same experience. Good engineering makes those relationships visible enough to build, operate, and change safely.</p>
+      <h2 id="engineering-system">Engineering across the system</h2>
+      <p>My work includes product interfaces, explicit domain models, health and event-data pipelines, and the infrastructure used to deploy and operate them.</p>
     </div>
     <div class="capability-grid">
       {capabilityAreas.map((area) => (
@@ -69,9 +66,8 @@ const capabilityAreas = [
   <section class="section section-muted" aria-labelledby="cross-disciplinary">
     <div class="split-section content-shell">
       <div class="section-heading">
-        <p class="eyebrow">Cross-disciplinary by necessity</p>
         <h2 id="cross-disciplinary">A production problem rarely stays inside one box.</h2>
-        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. The fix usually depends on understanding the whole path.</p>
+        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. I trace and fix the whole path.</p>
       </div>
       <div class="system-note" aria-hidden="true">
         <p>Interface</p>
@@ -82,19 +78,14 @@ const capabilityAreas = [
     </div>
   </section>
 
-  <section class="section content-shell" aria-labelledby="selected-work">
+  <section class="section content-shell" aria-labelledby="case-studies">
     <div class="section-heading">
-      <p class="eyebrow">Selected work</p>
-      <h2 id="selected-work">Selected systems across product, platform, and operations.</h2>
-      <p>These projects cover platform modernization, browser product delivery, health-data integration, financial workflows, infrastructure, and production operations.</p>
+      <h2 id="case-studies">Case studies</h2>
+      <p>Three products with different users, business models, and technical constraints.</p>
     </div>
     <div class="selected-work-list">
       {featuredProjects.map((project) => (
-        <article class="selected-work-card">
-          <h3><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
-          <p>{project.data.summary}</p>
-          <p class="owned"><strong>Responsibility:</strong> {project.data.role}</p>
-        </article>
+        <ProjectCard project={project} variant="home" />
       ))}
     </div>
   </section>
@@ -197,42 +188,6 @@ const capabilityAreas = [
     gap: var(--space-5);
     grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: var(--space-7);
-  }
-
-  .selected-work-card {
-    display: grid;
-    gap: var(--space-3);
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-md);
-    background: var(--color-paper);
-    padding: var(--space-5);
-  }
-
-  .selected-work-card h3 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-  }
-
-  .selected-work-card h3 a {
-    color: var(--color-ink);
-    text-decoration: none;
-  }
-
-  .selected-work-card h3 a:hover {
-    color: var(--color-forest);
-  }
-
-  .selected-work-card p {
-    color: var(--color-stone);
-  }
-
-  .selected-work-card .owned {
-    font-size: var(--text-body-s);
-  }
-
-  .selected-work-card strong {
-    color: var(--color-charcoal);
   }
 
   @media (max-width: 900px) {

@@ -1,31 +1,27 @@
 ---
 title: "Audicin Partners"
 slug: "audicin-partners"
-summary: "Partner-facing web application, backend services, infrastructure, and deployment operations."
-thesis: "Partner products need clear workflow boundaries, reliable backend behavior, and production systems that make operations manageable."
+context: "Audicin Partners gave external partners a browser-based way to manage their Audicin workflows."
+impact: "Enabled partners to manage customer workflows through a dedicated product rather than relying on internal operational support."
 disciplines:
   - Interface Engineering
-  - Backend Systems
-  - Cloud Infrastructure
-  - Reliability
-  - Architecture
+  - Backend Services
+  - Cloud Delivery
 status: "complete"
 featured: false
 publishedAt: 2026-07-18
 cover:
   alt: "Technical frame representing a partner web interface connected to backend and deployment systems."
   label: "Partner web + backend delivery"
-complexity: "Delivering a partner-facing workflow across frontend, backend, deployment, and infrastructure concerns."
-role: "Web application, backend, DevOps, and infrastructure."
-year: "Professional work"
+complexity: "Exposing partner workflow state clearly while preserving the service visibility needed to diagnose failures."
+role: "I built the web application and supporting backend, deployment, and infrastructure systems."
 displayOrder: 4
 ---
 
-## Scope
+## Partner workflow
 
-Audicin Partners was a partner-facing product effort spanning web application delivery, backend services, infrastructure, and deployment operations.
+Audicin Partners provided a browser workflow for external partners, backed by application services and its production environment.
 
-## The hard part
+## Operational boundary
 
-Partner workflows often expose the cost of unclear boundaries. The work needed the product surface, backend behavior, and production path to fit together without making operations fragile.
-
+The partner-facing interface had to expose useful workflow state without leaking backend or deployment concerns into the user experience. The supporting services still needed enough operational visibility to diagnose failures behind that interface.

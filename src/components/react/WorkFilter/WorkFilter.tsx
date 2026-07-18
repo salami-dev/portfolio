@@ -44,17 +44,18 @@ export function WorkFilter({ projects }: Props) {
       <div className={styles.list} id="work-list-heading">
         {visibleProjects.map((project) => (
           <article className={styles.item} key={project.slug}>
-            <p className={styles.meta}>{project.status}</p>
             <h2>
               <a className={styles.titleLink} href={`/work/${project.slug}/`}>
                 {project.title}
               </a>
             </h2>
-            <p>{project.thesis}</p>
+            <p>{project.context}</p>
+            <p>{project.contribution}</p>
+            <p><strong>Impact:</strong> {project.impact}</p>
             <p className={styles.meta}>{project.disciplines.join(" · ")}</p>
-            <p>{project.complexity}</p>
+            <p><strong>Key challenge:</strong> {project.complexity}</p>
             <a className={styles.link} href={`/work/${project.slug}/`} aria-label={`View ${project.title} case study`}>
-              View case study -&gt;
+              Read case study →
             </a>
           </article>
         ))}

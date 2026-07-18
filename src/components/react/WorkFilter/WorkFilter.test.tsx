@@ -8,17 +8,19 @@ const projects: WorkFilterProject[] = [
   {
     title: "Interface project",
     slug: "interface-project",
-    thesis: "Interface thesis",
+    context: "Interface product context",
+    contribution: "Built the interface",
+    impact: "Opened a browser channel",
     disciplines: ["Interface Engineering"],
-    status: "planned",
     complexity: "Complexity frame"
   },
   {
     title: "Data project",
     slug: "data-project",
-    thesis: "Data thesis",
+    context: "Data product context",
+    contribution: "Built the data system",
+    impact: "Made processing reliable",
     disciplines: ["Data Engineering"],
-    status: "planned",
     complexity: "Complexity frame"
   }
 ];

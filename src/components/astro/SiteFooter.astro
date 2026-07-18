@@ -7,14 +7,7 @@ const isContactPage = Astro.url.pathname === "/contact/";
 <footer class="site-footer">
   <div class="site-footer__inner content-shell">
     <div>
-      <p class="eyebrow">Contact</p>
-      <h2>Product and system work across interface, backend, data, and operations.</h2>
-    </div>
-    <div class="footer-flow" aria-label="Contact system flow">
-      <span>Product interfaces</span>
-      <span>Backend systems</span>
-      <span>Data</span>
-      <span>Cloud operations</span>
+      <h2>Have a product or system problem that crosses technical boundaries?</h2>
     </div>
     <address class="footer-links">
       <ObfuscatedEmailLink compact />
@@ -35,32 +28,12 @@ const isContactPage = Astro.url.pathname === "/contact/";
   .site-footer__inner {
     display: grid;
     gap: var(--space-6);
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.55fr);
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .site-footer h2 {
     max-width: 760px;
     color: white;
-  }
-
-  .site-footer .eyebrow {
-    color: white;
-  }
-
-  .footer-flow {
-    display: grid;
-    gap: var(--space-3);
-    align-content: start;
-  }
-
-  .footer-flow span {
-    border: 1px solid var(--color-dark-border);
-    border-radius: var(--radius-sm);
-    background: var(--color-dark-surface);
-    color: white;
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-    padding: var(--space-3);
   }
 
   .footer-links {
