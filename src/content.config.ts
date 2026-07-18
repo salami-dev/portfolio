@@ -94,6 +94,9 @@ const travel = defineCollection({
           image: image(),
           alt: z.string().min(1),
           location: z.string().min(1),
+          country: z.string().min(1).optional(),
+          city: z.string().min(1).optional(),
+          locationSource: z.enum(["embedded", "openstreetmap", "none"]).default("none"),
           capturedAt: z.coerce.date().optional(),
           caption: z.string().optional(),
           displayOrder: z.number().int().nonnegative().default(100)
