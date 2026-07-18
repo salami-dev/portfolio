@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  photos: CollectionEntry<"travel">["data"]["photos"];
+}
+
+const { photos } = Astro.props;
+---
+
+<div class="travel-gallery" data-travel-gallery>
+  {photos.map((photo) => (
+    <figure class="travel-gallery__item">
+      <Image
+        src={photo.image}
+        alt={photo.alt}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw"
+        loading="lazy"
+      />
+      <figcaption>
+        <span>{photo.location}</span>
+        {photo.caption && <span>{photo.caption}</span>}
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .travel-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-6);
+    margin-block-start: var(--space-7);
+  }
+
+  .travel-gallery__item {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+
+  .travel-gallery__item :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--color-mist);
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+    line-height: 1.55;
+  }
+
+  figcaption span:first-child {
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+  }
+</style>

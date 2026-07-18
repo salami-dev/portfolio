@@ -1,6 +1,13 @@
 ---
+import { getCollection } from "astro:content";
+import TravelGallery from "@components/astro/TravelGallery.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+
+const [travelGallery] = await getCollection("travel");
+const travelPhotos = [...(travelGallery?.data.photos ?? [])].sort(
+  (first, second) => first.displayOrder - second.displayOrder
+);
 
 const metadata = buildPageMetadata({
   title: "About Bashir Salami — Software Engineer and Technical Lead",
@@ -24,5 +31,14 @@ const metadata = buildPageMetadata({
     <h2>How I work</h2>
     <p>I like understanding the product before deciding how to build it. That usually means asking what the user is trying to do, where the real complexity sits, and what will become painful to change later.</p>
     <p>I prefer simple systems with clear responsibilities. When complexity is necessary, it should be visible, measurable, and explainable.</p>
+
+    <h2>Outside work</h2>
+    <p>I am usually playing table tennis or travelling across West Africa—occasionally both with more confidence than planning.</p>
   </section>
+
+  {travelPhotos.length > 0 && (
+    <section class="standard-shell" aria-label="Travel photographs">
+      <TravelGallery photos={travelPhotos} />
+    </section>
+  )}
 </PageLayout>

@@ -85,4 +85,21 @@ const labs = defineCollection({
   })
 });
 
-export const collections = { projects, notes, labs };
+const travel = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/travel" }),
+  schema: ({ image }) =>
+    z.object({
+      photos: z.array(
+        z.object({
+          image: image(),
+          alt: z.string().min(1),
+          location: z.string().min(1),
+          capturedAt: z.coerce.date().optional(),
+          caption: z.string().optional(),
+          displayOrder: z.number().int().nonnegative().default(100)
+        })
+      )
+    })
+});
+
+export const collections = { projects, notes, labs, travel };

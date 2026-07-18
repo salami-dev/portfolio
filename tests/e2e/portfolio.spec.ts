@@ -58,7 +58,9 @@ test("about page explains whole-problem ownership and working style", async ({ p
   await expect(page.getByText(/breadth came from working in startups/)).toBeVisible();
   await expect(page.getByText(/habit has carried beyond startup environments/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "How I work" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Outside work" })).not.toBeAttached();
+  await expect(page.getByRole("heading", { name: "Outside work" })).toBeVisible();
+  await expect(page.getByText(/playing table tennis or travelling across West Africa/)).toBeVisible();
+  await expect(page.locator("[data-travel-gallery]")).not.toBeAttached();
 });
 
 test("keyboard focus can reach primary actions", async ({ page }) => {
