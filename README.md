@@ -10,7 +10,7 @@ Static editorial portfolio
 Independent interactive engineering exhibits
 ```
 
-Most pages render as static Astro HTML. React is reserved for small interactive islands, such as the current work filter and future engineering demonstrations.
+Most pages render as static Astro HTML. React is reserved for small interactive islands, such as the mobile navigation toggle and future engineering demonstrations.
 
 ## Stack
 
@@ -28,7 +28,7 @@ Most pages render as static Astro HTML. React is reserved for small interactive 
 
 ## Architecture
 
-- `src/pages`: static routes and content-driven dynamic routes
+- `src/pages`: static public routes
 - `src/layouts`: document, page, and MDX content shells
 - `src/components/astro`: static components and technical visuals
 - `src/components/react`: isolated interactive islands
@@ -75,6 +75,8 @@ Do not place implementation styling choices in frontmatter. Use semantic fields 
 
 Add an MDX file in `src/content/projects`.
 
+Project content currently acts as a drafting boundary. Public project detail routes should only be reintroduced when an entry has working code, permitted real-world detail, or substantive technical analysis that can be inspected.
+
 Required fields include:
 
 - `title`
@@ -89,11 +91,13 @@ Required fields include:
 - `role`
 - `year`
 
-Use explicit placeholders when real repository links, demos, metrics, or outcomes are not known.
+Do not publish invented metrics, outcomes, repository links, demos, users, customers, revenue, or scale.
 
 ## Adding A Note
 
 Add an MDX file in `src/content/notes`.
+
+Notes should remain out of public navigation until there are at least three substantive articles.
 
 Notes support the controlled MDX authoring components:
 
@@ -104,7 +108,7 @@ Notes support the controlled MDX authoring components:
 
 Add a JSON file in `src/content/labs`.
 
-Each lab should have one narrow technical question, a short explanation, disciplines, status, and a visual placeholder.
+Each lab should have one narrow technical question, a short explanation, disciplines, status, and a visual frame. Publish lab routes only after at least two demonstrations are working or otherwise meaningfully inspectable.
 
 ## Deployment
 
@@ -129,7 +133,7 @@ npm run build
 npm run test:e2e
 ```
 
-Playwright tests cover navigation, mobile menu behavior, project links, filtering, keyboard navigation, reduced-motion handling, accessibility, and responsive smoke checks.
+Playwright tests cover navigation, mobile menu behavior, work-page publishing criteria, keyboard navigation, reduced-motion handling, accessibility, and responsive smoke checks.
 
 ## Accessibility Expectations
 

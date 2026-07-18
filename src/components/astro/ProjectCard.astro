@@ -12,8 +12,8 @@ const { project } = Astro.props;
 
 <article class="project-card">
   <a class="project-card__link" href={workPath(project.data.slug)} aria-label={`View ${project.data.title} case study`}>
-    <div class="project-card__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical placeholder for ${project.data.title}`}>
-      <span>{project.data.cover?.label ?? "Technical project placeholder"}</span>
+    <div class="project-card__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
+      <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
     </div>
     <div class="project-card__body">
       <p class="eyebrow">{formatStatus(project.data.status)}</p>
