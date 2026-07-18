@@ -3,8 +3,8 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 
 const metadata = buildPageMetadata({
-  title: "About Bashir Salami — Hands-on Technical Leader",
-  description: "A cross-disciplinary software engineer and technical leader working across product, systems, data, cloud, and operations.",
+  title: "About Bashir Salami — Software Engineer and Technical Lead",
+  description: "A software engineer and technical lead who takes ownership across product, engineering, delivery, and production.",
   path: "/about/"
 });
 ---
@@ -12,13 +12,20 @@ const metadata = buildPageMetadata({
 <PageLayout
   metadata={metadata}
   eyebrow="About"
-  title="Hands-on software engineering and technical leadership."
-  summary="I design and deliver product interfaces, backend services, data pipelines, cloud infrastructure, and the production practices around them."
+  title="I like owning the whole problem, not just the technical part."
+  summary="I am a software engineer and technical lead, but I have never been especially interested in staying inside one layer of the stack—or inside a narrowly defined technical role."
 >
   <section class="reading-shell mdx-content about-content">
-    <p>I am most useful when a user workflow depends on a difficult domain model, a data pipeline changes product behavior, or deployment and observability constraints shape the architecture.</p>
-    <p>I stay close to code, infrastructure, data, design decisions, incident investigation, and code review. Technical leadership creates the clarity needed for sound decisions and reliable delivery while keeping implementation feedback close.</p>
-    <h2>Working approach</h2>
-    <p>Explicit boundaries, typed contracts, accessible interfaces, observable behavior, and explainable trade-offs matter more than adding technology for its own sake.</p>
+    <p>I have worked across product interfaces, backend services, data pipelines, cloud infrastructure, and production operations. I tend to get involved wherever the boundaries are unclear, one part of the system starts affecting another, or something important simply needs an owner.</p>
+    <p>For me, ownership means following the work beyond implementation. It means understanding the product, making the technical decisions, helping the team deliver, dealing with what happens in production, and staying with the problem until it is actually resolved.</p>
+    <p>That has sometimes taken me well outside conventional engineering duties. I have worked on business and partnership conversations, helped shape product direction, supported commercial decisions, and handled the coordination needed to move work forward across technical and non-technical teams.</p>
+    <p>I still stay close to the engineering. I write code, review implementations, investigate failures, and get involved in architecture and infrastructure decisions. Leadership has not meant stepping away from the work; it has meant taking responsibility for more of the context around it.</p>
+
+    <h2>How I work</h2>
+    <p>I like understanding the product before deciding how to build it. That usually means asking what the user is trying to do, where the real complexity sits, and what will become painful to change later.</p>
+    <p>I prefer simple systems with clear responsibilities. When complexity is necessary, it should be visible, measurable, and explainable.</p>
+
+    <h2>Outside work</h2>
+    <p>I am usually playing table tennis or travelling across West Africa—occasionally both with more confidence than planning.</p>
   </section>
 </PageLayout>
