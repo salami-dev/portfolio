@@ -10,6 +10,13 @@ declare global {
 test("homepage renders all case-study cards and navigation", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /I build the product surface/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "A problem rarely stays inside one box." })).toBeVisible();
+  await expect(page.getByText(/Working in startups taught me not to treat a job description/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Engineering across the system" })).not.toBeAttached();
+  await expect(page.locator("main h2")).toHaveText([
+    "A problem rarely stays inside one box.",
+    "Case studies"
+  ]);
   await expect(page.locator("[data-project-card]")).toHaveCount(3);
   await expect(page.getByRole("heading", { name: /Audicin V2/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "How I work" })).toBeVisible();

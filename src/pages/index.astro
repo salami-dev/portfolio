@@ -13,25 +13,6 @@ const metadata = buildPageMetadata({
   description: "Product interfaces, backend systems, data, cloud infrastructure, and production operations.",
   path: "/"
 });
-
-const capabilityAreas = [
-  {
-    title: "Interface engineering",
-    body: "Complex product interfaces, reusable component systems, stateful workflows, data-heavy views, accessibility, and frontend performance."
-  },
-  {
-    title: "Backend systems",
-    body: "Domain models and APIs that make workflow state explicit; asynchronous processing, provider integrations, migrations, idempotency, and failure recovery."
-  },
-  {
-    title: "Data systems",
-    body: "Event and health-data pipelines, sessionization, incremental processing, late-arriving records, analytical models, data-quality controls, and the interfaces used to inspect them."
-  },
-  {
-    title: "Platform and operations",
-    body: "Cloud infrastructure, Kubernetes, CI/CD, secrets, observability, scaling, deployment safety, and incident investigation."
-  }
-];
 ---
 
 <BaseLayout metadata={metadata}>
@@ -48,32 +29,12 @@ const capabilityAreas = [
     <TechnicalHeroVisual />
   </section>
 
-  <section class="section content-shell" aria-labelledby="engineering-system">
-    <div class="section-heading">
-      <h2 id="engineering-system">Engineering across the system</h2>
-      <p>My work includes product interfaces, explicit domain models, health and event-data pipelines, and the infrastructure used to deploy and operate them.</p>
-    </div>
-    <div class="capability-grid">
-      {capabilityAreas.map((area) => (
-        <article class="capability-card">
-          <h3>{area.title}</h3>
-          <p>{area.body}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section section-muted" aria-labelledby="cross-disciplinary">
-    <div class="split-section content-shell">
-      <div class="section-heading">
-        <h2 id="cross-disciplinary">A production problem rarely stays inside one box.</h2>
-        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. I trace and fix the whole path.</p>
-      </div>
-      <div class="system-note" aria-hidden="true">
-        <p>Interface</p>
-        <p>Service</p>
-        <p>Data</p>
-        <p>Telemetry</p>
+  <section class="section section-muted" aria-labelledby="ownership">
+    <div class="ownership-section content-shell">
+      <h2 id="ownership">A problem rarely stays inside one box.</h2>
+      <div class="ownership-copy">
+        <p>A product issue might show up in the interface, come from a backend rule, depend on the data, or turn out to be a deployment problem. I am comfortable following it through those layers and staying with the work until the outcome is right.</p>
+        <p>Working in startups taught me not to treat a job description as the boundary of the problem. When the work has required it, I have also led product, business, and partnership conversations to help move the product forward.</p>
       </div>
     </div>
   </section>
@@ -118,69 +79,29 @@ const capabilityAreas = [
     gap: var(--space-3);
   }
 
-  .capability-grid {
-    display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: var(--space-7);
-  }
-
-  .capability-card,
-  .system-note {
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-md);
-    background: var(--color-paper);
-    padding: var(--space-5);
-  }
-
-  .capability-card {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .capability-card h3 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-  }
-
-  .capability-card p,
-  .system-note {
-    align-content: start;
-  }
-
-  .system-note p {
-    border-bottom: 1px solid var(--color-sand);
-    color: var(--color-charcoal);
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-    margin: 0;
-    padding-block: var(--space-3);
-  }
-
-  .system-note p:last-child {
-    border-bottom: 0;
-  }
-
-  .capability-card p {
-    color: var(--color-stone);
-  }
-
-  .split-section {
+  .ownership-section {
     display: grid;
     gap: var(--space-7);
-    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1fr);
     align-items: start;
+  }
+
+  .ownership-section h2 {
+    max-width: 12ch;
+  }
+
+  .ownership-copy {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 62ch;
+    color: var(--color-charcoal);
+    font-size: var(--text-body-l);
+    line-height: 1.6;
   }
 
   .section-heading p:not(.eyebrow) {
     max-width: 62ch;
     color: var(--color-stone);
-  }
-
-  .section-muted .section-heading p,
-  .section-muted .eyebrow {
-    color: var(--color-charcoal);
   }
 
   .selected-work-list {
@@ -192,8 +113,7 @@ const capabilityAreas = [
 
   @media (max-width: 900px) {
     .hero,
-    .split-section,
-    .capability-grid,
+    .ownership-section,
     .selected-work-list {
       grid-template-columns: 1fr;
     }
