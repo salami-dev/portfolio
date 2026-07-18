@@ -37,8 +37,28 @@ const metadata = buildPageMetadata({
   </section>
 
   {travelPhotos.length > 0 && (
-    <section class="standard-shell" aria-label="Travel photographs">
+    <section class="wide-shell travel-gallery-shell" aria-label="Travel photographs">
       <TravelGallery photos={travelPhotos} />
     </section>
   )}
 </PageLayout>
+
+<style>
+  .about-content {
+    padding-block-end: var(--space-8);
+  }
+
+  .travel-gallery-shell {
+    padding-block-end: var(--space-9);
+  }
+
+  @media (max-width: 639px) {
+    .about-content {
+      padding-block-end: var(--space-7);
+    }
+
+    .travel-gallery-shell {
+      padding-block-end: var(--space-8);
+    }
+  }
+</style>
