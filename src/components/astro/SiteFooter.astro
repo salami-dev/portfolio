@@ -16,7 +16,7 @@ const isContactPage = Astro.url.pathname === "/contact/";
       <span>Evidence</span>
     </div>
     <address class="footer-links">
-      <ObfuscatedEmailLink />
+      <ObfuscatedEmailLink compact />
       <a href="https://github.com/salami-dev">GitHub</a>
       <a href="https://www.linkedin.com/in/bashir-salami">LinkedIn</a>
     </address>
@@ -65,6 +65,7 @@ const isContactPage = Astro.url.pathname === "/contact/";
   .footer-links {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-4);
     font-style: normal;
   }
