@@ -3,19 +3,19 @@ import { basename, dirname, extname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
 
-const outputFormats = {
-  ".jpeg": { format: "jpeg", options: { quality: 88, mozjpeg: true } },
-  ".jpg": { format: "jpeg", options: { quality: 88, mozjpeg: true } },
-  ".png": { format: "png", options: { compressionLevel: 9 } },
-  ".webp": { format: "webp", options: { quality: 88 } }
+const maximumImageEdge = 2560;
+const webpOptions = {
+  quality: 82,
+  alphaQuality: 90,
+  effort: 4,
+  smartSubsample: true
 };
 
 export async function sanitizeTravelImage(inputPath, outputPath) {
   const extension = extname(outputPath).toLowerCase();
-  const output = outputFormats[extension];
 
-  if (!output) {
-    throw new Error("Supported output formats are .jpg, .jpeg, .png, and .webp.");
+  if (extension !== ".webp") {
+    throw new Error("The output filename must use the .webp extension.");
   }
 
   await mkdir(dirname(outputPath), { recursive: true });
@@ -25,7 +25,13 @@ export async function sanitizeTravelImage(inputPath, outputPath) {
   // before that metadata is discarded.
   await sharp(inputPath)
     .rotate()
-    .toFormat(output.format, output.options)
+    .resize({
+      width: maximumImageEdge,
+      height: maximumImageEdge,
+      fit: "inside",
+      withoutEnlargement: true
+    })
+    .webp(webpOptions)
     .toFile(outputPath);
 }
 
@@ -34,7 +40,7 @@ async function run() {
 
   if (!inputPath || !requestedFilename) {
     throw new Error(
-      "Usage: npm run travel:photo -- <source-image> <output-filename.jpg>"
+      "Usage: npm run travel:photo -- <source-image> <output-filename.webp>"
     );
   }
 

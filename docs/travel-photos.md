@@ -7,10 +7,10 @@ Travel photos on the About page are static, build-time content. The gallery is o
 1. Sanitize and copy the original into the managed asset directory:
 
    ```bash
-   npm run travel:photo -- /path/to/original.jpg accra-coast.jpg
+   npm run travel:photo -- /path/to/original.jpg accra-coast.webp
    ```
 
-   The command applies the camera orientation, removes EXIF, GPS, XMP, and other embedded metadata, and writes an optimized copy to `src/assets/travel/`. The original is not modified.
+   The command applies the camera orientation, converts the image to WebP at a balanced quality setting of 82, limits its longest edge to 2560 pixels without upscaling, removes EXIF, GPS, XMP, and other embedded metadata, and writes an optimized copy to `src/assets/travel/`. The original is not modified.
 
 2. Add an entry to the `photos` array in `src/content/travel/gallery.json`:
 
@@ -18,7 +18,7 @@ Travel photos on the About page are static, build-time content. The gallery is o
    {
      "photos": [
        {
-         "image": "../../assets/travel/accra-coast.jpg",
+         "image": "../../assets/travel/accra-coast.webp",
          "alt": "A precise description of the visible scene.",
          "location": "Accra, Ghana",
          "capturedAt": "2026-01-15",
