@@ -7,37 +7,43 @@ declare global {
   }
 }
 
-test("homepage navigation and project links work", async ({ page }) => {
+test("homepage renders all case-study cards and navigation", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Product interfaces/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /I build the product surface/ })).toBeVisible();
+  await expect(page.locator("[data-project-card]")).toHaveCount(3);
   await expect(page.getByRole("heading", { name: /Audicin V2/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Working approach" })).toBeVisible();
-  await page.getByRole("link", { name: "View selected work" }).click();
+  await expect(page.getByRole("link", { name: "How I work" })).toBeVisible();
+  await page.getByRole("link", { name: "View work" }).click();
   await expect(page).toHaveURL(/\/work\/$/);
-  await expect(page.getByRole("heading", { name: /Selected systems across product/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Products for listening/ })).toBeVisible();
 });
 
 test("mobile menu exposes primary navigation", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile-only navigation behavior");
   await page.goto("/");
-  await page.getByRole("button", { name: "Menu" }).click();
+  await page.getByRole("banner").getByRole("button", { name: "Menu" }).click();
   await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Contact" })).toBeVisible();
 });
 
-test("work page lists real project summaries", async ({ page }) => {
+test("work page renders the complete project card set", async ({ page }) => {
   await page.goto("/work/");
-  await expect(page.getByRole("heading", { name: "Primary case studies" })).toBeVisible();
+  await expect(page.locator("[data-project-card]")).toHaveCount(7);
+  await expect(page.locator('[data-card-variant="featured"]')).toHaveCount(3);
+  await expect(page.locator('[data-card-variant="supporting"]')).toHaveCount(4);
   await expect(page.getByRole("heading", { name: /Audicin Web/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Bridger/ })).toBeVisible();
-  await expect(page.locator("dd", { hasText: "origination, KYC, wallet" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Supporting work" })).toBeVisible();
+  const audicinV2Card = page.locator("article").filter({ has: page.getByRole("heading", { name: "Audicin V2" }) }).first();
+  await expect(audicinV2Card).toContainText("Audicin is an audio-health product");
+  await expect(audicinV2Card).toContainText("Impact:");
+  await expect(audicinV2Card).toContainText("Key challenge:");
+  await expect(page.getByRole("heading", { name: "Sproutly Mobile" })).toBeVisible();
 });
 
 test("project story pages support images and fallback media", async ({ page }) => {
   await page.goto("/work/audicin-web/");
   await expect(page.getByRole("heading", { name: /Audicin Web/ })).toBeVisible();
   await expect(page.getByRole("img", { name: "Audicin web application interface." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Scope" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Browser product" })).toBeVisible();
 
   await page.goto("/work/bridger-web/");
   await expect(page.getByRole("heading", { name: /Bridger/ })).toBeVisible();
