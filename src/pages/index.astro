@@ -1,7 +1,6 @@
 ---
 import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 import { workPath } from "@lib/routing/urls";
 import { getCollection } from "astro:content";
@@ -12,36 +11,28 @@ const featuredProjects = (await getCollection("projects"))
   .slice(0, 4);
 
 const metadata = buildPageMetadata({
-  title: "Personal Engineering Portfolio",
-  description: "Bashir Salami builds product interfaces and the systems behind them across frontend, backend, data, cloud, and operations.",
+  title: "Bashir Salami — Software Engineer & Technical Leader",
+  description: "I build product interfaces and the backend, data, cloud, and production systems behind them.",
   path: "/"
 });
 
 const capabilityAreas = [
   {
-    title: "Product and interface engineering",
-    body: "Responsive, accessible interfaces for workflows with substantial state, data, permissions, or operational complexity."
+    title: "Interface engineering",
+    body: "Complex product interfaces, reusable component systems, stateful workflows, data-heavy views, accessibility, and frontend performance."
   },
   {
-    title: "Backend and system architecture",
-    body: "APIs, domain models, asynchronous workflows, integrations, migrations, and distributed processes designed around explicit failure modes."
+    title: "Backend systems",
+    body: "Domain models and APIs that make workflow state explicit; asynchronous processing, provider integrations, migrations, idempotency, and failure recovery."
   },
   {
-    title: "Data and analytical systems",
-    body: "Event collection, transformation pipelines, analytical models, data-quality controls, and interfaces that make complex information understandable."
+    title: "Data systems",
+    body: "Event and health-data pipelines, sessionization, incremental processing, late-arriving records, analytical models, data-quality controls, and the interfaces used to inspect them."
   },
   {
-    title: "Cloud and production engineering",
-    body: "Infrastructure automation, delivery pipelines, observability, scaling, incident investigation, and the operating systems around production software."
+    title: "Platform and operations",
+    body: "Cloud infrastructure, Kubernetes, CI/CD, secrets, observability, scaling, deployment safety, and incident investigation."
   }
-];
-
-const explorationTopics = [
-  "visualizing database contention",
-  "explaining queue backpressure",
-  "tracing timeout propagation across a request path",
-  "comparing cache-consistency strategies",
-  "making distributed workflow state inspectable"
 ];
 ---
 
@@ -50,10 +41,10 @@ const explorationTopics = [
     <div class="hero__copy">
       <p class="eyebrow">SOFTWARE ENGINEER · TECHNICAL LEADER</p>
       <h1>I build the product surface and the systems behind it.</h1>
-      <p class="lede">I work across frontend engineering, backend architecture, data systems, cloud infrastructure, and production operations, connecting the layers that turn an idea into reliable software.</p>
+      <p class="lede">I design and ship software across frontend, backend, data, cloud infrastructure, and production operations. I am most useful when the problem crosses those boundaries and the parts have to work as one system.</p>
       <div class="hero__actions">
-        <a class="button button-primary" href="/work/">Explore my work</a>
-        <a class="button button-secondary" href="/about/">About how I work</a>
+        <a class="button button-primary" href="/work/">View selected work</a>
+        <a class="button button-secondary" href="/about/">How I work</a>
       </div>
     </div>
     <TechnicalHeroVisual />
@@ -61,9 +52,9 @@ const explorationTopics = [
 
   <section class="section content-shell" aria-labelledby="engineering-system">
     <div class="section-heading">
-      <p class="eyebrow">Engineering across the system</p>
-      <h2 id="engineering-system">My work does not fit neatly into a single layer.</h2>
-      <p>I build interfaces, model backend domains, design data flows, automate infrastructure, and investigate production failures. The common thread is understanding how technical decisions affect the product, the people using it, and the engineers responsible for operating it.</p>
+      <p class="eyebrow">Across the system</p>
+      <h2 id="engineering-system">The work does not stop at the interface—or begin at the infrastructure.</h2>
+      <p>I build user-facing products, model backend domains, design data flows, automate delivery environments, and investigate production failures. That breadth matters because product behavior and system behavior are usually the same problem viewed from different layers.</p>
     </div>
     <div class="capability-grid">
       {capabilityAreas.map((area) => (
@@ -80,10 +71,13 @@ const explorationTopics = [
       <div class="section-heading">
         <p class="eyebrow">Cross-disciplinary by necessity</p>
         <h2 id="cross-disciplinary">A production problem rarely stays inside one box.</h2>
-        <p>A user-facing failure may begin in the interface, originate in a service, worsen in a database, and remain invisible because the telemetry is incomplete.</p>
+        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. I work across those boundaries so the system can be understood and fixed as a whole.</p>
       </div>
-      <div class="system-note">
-        <p>I am most useful where the work requires more than implementing an isolated component: understanding the system, choosing the right boundary, building the solution, and making it operable.</p>
+      <div class="system-note" aria-hidden="true">
+        <p>Interface</p>
+        <p>Service</p>
+        <p>Data</p>
+        <p>Telemetry</p>
       </div>
     </div>
   </section>
@@ -91,32 +85,17 @@ const explorationTopics = [
   <section class="section content-shell" aria-labelledby="selected-work">
     <div class="section-heading">
       <p class="eyebrow">Selected work</p>
-      <h2 id="selected-work">A few examples of the kind of systems I have worked on.</h2>
-      <p>These are concise public summaries. They avoid private implementation details, but they show the shape of the ownership and technical work.</p>
+      <h2 id="selected-work">Selected systems where I owned more than one layer.</h2>
+      <p>These projects show different parts of my work: modernizing a product platform, building a browser application and its delivery path, and modelling financial workflows where identity, money movement, and recovery have to remain explicit.</p>
     </div>
     <div class="selected-work-list">
       {featuredProjects.map((project) => (
         <article class="selected-work-card">
-          <div class="metadata-row">
-            <span>{formatStatus(project.data.status)}</span>
-            <span>{project.data.year}</span>
-          </div>
           <h3><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
           <p>{project.data.summary}</p>
-          <p class="owned"><strong>Owned:</strong> {project.data.role}</p>
+          <p class="owned"><strong>My responsibility:</strong> {project.data.role}</p>
         </article>
       ))}
-    </div>
-  </section>
-
-  <section class="section content-shell" aria-labelledby="currently-exploring">
-    <div class="section-heading">
-      <p class="eyebrow">Currently exploring</p>
-      <h2 id="currently-exploring">Focused demonstrations for one engineering question at a time.</h2>
-      <p>These will be published when they have a working demonstration, repository, or substantive analysis.</p>
-    </div>
-    <div class="topic-list" role="list">
-      {explorationTopics.map((topic) => <span role="listitem">{topic}</span>)}
     </div>
   </section>
 </BaseLayout>
@@ -175,7 +154,24 @@ const explorationTopics = [
   }
 
   .capability-card p,
+  .system-note {
+    align-content: start;
+  }
+
   .system-note p {
+    border-bottom: 1px solid var(--color-sand);
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    margin: 0;
+    padding-block: var(--space-3);
+  }
+
+  .system-note p:last-child {
+    border-bottom: 0;
+  }
+
+  .capability-card p {
     color: var(--color-stone);
   }
 
@@ -196,27 +192,10 @@ const explorationTopics = [
     color: var(--color-charcoal);
   }
 
-  .topic-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
-  }
-
-  .topic-list span {
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-pill);
-    background: var(--color-paper);
-    color: var(--color-charcoal);
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-    padding: 0.45rem 0.7rem;
-  }
-
   .selected-work-list {
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: var(--space-7);
   }
 

@@ -3,8 +3,8 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 
 const metadata = buildPageMetadata({
-  title: "About",
-  description: "About Bashir Salami, a hands-on software engineer working across product, frontend, backend, data, cloud, and production systems.",
+  title: "About Bashir Salami — Hands-on Technical Leader",
+  description: "A cross-disciplinary software engineer and technical leader working across product, systems, data, cloud, and operations.",
   path: "/about/"
 });
 ---
@@ -13,12 +13,12 @@ const metadata = buildPageMetadata({
   metadata={metadata}
   eyebrow="About"
   title="I am a hands-on software engineer and technical leader."
-  summary="My experience spans product development, frontend systems, backend services, cloud platforms, data engineering, CI/CD, observability, and technical architecture."
+  summary="I have moved across frontend development, backend systems, cloud and platform engineering, data infrastructure, and technical architecture because the problems I work on rarely stop at one boundary."
 >
   <section class="reading-shell mdx-content about-content">
-    <p>I care about systems that are understandable, maintainable, measurable, and useful, not complexity for its own sake.</p>
-    <p>I tend to work best on problems with unclear boundaries, where product behavior, system design, and production constraints need to be considered together.</p>
+    <p>I am most useful when a product needs both implementation depth and systems judgement: when a user workflow depends on a difficult domain model, when a data pipeline affects product behavior, or when deployment and observability constraints change the architecture.</p>
+    <p>I still work directly with code, infrastructure, data, design decisions, incident investigation, and code review. Leadership, for me, is not distance from implementation; it is creating enough clarity that a team can make sound decisions and ship reliably.</p>
     <h2>How I work</h2>
-    <p>I prefer explicit boundaries, typed contracts, accessible interfaces, observable systems, and trade-offs that can be explained. The work should become easier to reason about as assumptions are tested and uncertainty is reduced.</p>
+    <p>I prefer explicit boundaries, typed contracts, accessible interfaces, observable behavior, and trade-offs that can be explained. I would rather simplify a system than add technology merely to make it appear sophisticated.</p>
   </section>
 </PageLayout>

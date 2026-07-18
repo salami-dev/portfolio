@@ -1,15 +1,16 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
-import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 import { workPath } from "@lib/routing/urls";
 import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.displayOrder - b.data.displayOrder);
+const flagshipProjects = projects.filter((project) => project.data.featured);
+const supportingProjects = projects.filter((project) => !project.data.featured);
 
 const metadata = buildPageMetadata({
-  title: "Work",
-  description: "Selected work by Bashir Salami across interface engineering, backend systems, data, cloud, reliability, performance, and architecture.",
+  title: "Selected Engineering Work — Bashir Salami",
+  description: "Case studies across frontend engineering, backend systems, data platforms, cloud infrastructure, payments, and production operations.",
   path: "/work/"
 });
 ---
@@ -17,17 +18,21 @@ const metadata = buildPageMetadata({
 <PageLayout
   metadata={metadata}
   eyebrow="Work"
-  title="Selected work across product, backend, data, and infrastructure."
-  summary="A concise view of systems I have built or contributed to, using only details I can state publicly."
+  title="Systems where product behavior, architecture, data, and operations had to work together."
+  summary="This is not a complete employment history. It is a selection of projects that show different parts of how I work: building user-facing products, modelling difficult domains, integrating external systems, designing data flows, and operating software in production."
 >
   <section class="content-shell work-section" aria-labelledby="work-overview">
     <div class="work-panel">
-      <p class="eyebrow">Work overview</p>
-      <h2 id="work-overview">The common thread is owning the connections between layers.</h2>
-      <p>These projects span product surfaces, backend systems, financial and health-related workflows, cloud infrastructure, delivery pipelines, and production operations. Fuller case studies can be added where the details are safe to publish.</p>
+      <p class="eyebrow">Selected work</p>
+      <h2 id="work-overview">Three projects carry the main evidence.</h2>
+      <p>Audicin V2 shows platform and health-data integration work. Audicin Web shows the product interface and delivery path. Bridger shows backend domain modelling around identity, wallet state, payments, and repayments.</p>
     </div>
-    <div class="work-list">
-      {projects.map((project) => (
+    <div class="section-heading">
+      <p class="eyebrow">Flagship work</p>
+      <h2>Primary case studies</h2>
+    </div>
+    <div class="work-list work-list--flagship">
+      {flagshipProjects.map((project) => (
         <article class="work-entry">
           <div class="work-entry__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
             {project.data.mainImage ? (
@@ -38,7 +43,6 @@ const metadata = buildPageMetadata({
           </div>
           <div class="work-entry__body">
             <div class="metadata-row">
-              <span>{formatStatus(project.data.status)}</span>
               <span>{project.data.year}</span>
             </div>
             <h2><a href={workPath(project.data.slug)}>{project.data.title}</a></h2>
@@ -46,19 +50,43 @@ const metadata = buildPageMetadata({
             <p>{project.data.thesis}</p>
             <dl>
               <div>
-                <dt>Owned</dt>
+                <dt>My responsibility</dt>
                 <dd>{project.data.role}</dd>
               </div>
               <div>
-                <dt>Technical complexity</dt>
+                <dt>The hard part</dt>
                 <dd>{project.data.complexity}</dd>
               </div>
             </dl>
             <div class="tag-list" aria-label={`Disciplines for ${project.data.title}`}>
               {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
             </div>
-            <a class="story-link" href={workPath(project.data.slug)}>Read project story</a>
+            <a class="story-link" href={workPath(project.data.slug)}>View case study</a>
           </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="section-heading section-heading--supporting">
+      <p class="eyebrow">Additional systems and platform work</p>
+      <h2>Supporting work</h2>
+      <p>Shorter examples of backend, payment, partner, mobile-support, architecture, and delivery work. These stay compact until there is enough public evidence for a full case study.</p>
+    </div>
+    <div class="supporting-list">
+      {supportingProjects.map((project) => (
+        <article class="supporting-entry">
+          <div class="metadata-row">
+            <span>{project.data.year}</span>
+          </div>
+          <h3><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
+          <p>{project.data.summary}</p>
+          <dl>
+            <div>
+              <dt>My responsibility</dt>
+              <dd>{project.data.role}</dd>
+            </div>
+          </dl>
+          <a class="story-link" href={workPath(project.data.slug)}>View project detail</a>
         </article>
       ))}
     </div>
@@ -87,6 +115,20 @@ const metadata = buildPageMetadata({
   .work-list {
     display: grid;
     gap: var(--space-5);
+  }
+
+  .section-heading {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .section-heading--supporting {
+    margin-top: var(--space-7);
+  }
+
+  .section-heading p:not(.eyebrow) {
+    max-width: 68ch;
+    color: var(--color-stone);
   }
 
   .work-entry {
@@ -181,8 +223,44 @@ const metadata = buildPageMetadata({
     color: var(--color-stone);
   }
 
+  .supporting-list {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .supporting-entry {
+    display: grid;
+    gap: var(--space-3);
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    padding: var(--space-5);
+  }
+
+  .supporting-entry h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 400;
+  }
+
+  .supporting-entry h3 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .supporting-entry h3 a:hover {
+    color: var(--color-forest);
+  }
+
+  .supporting-entry p,
+  .supporting-entry dd {
+    color: var(--color-stone);
+  }
+
   @media (max-width: 820px) {
-    .work-entry {
+    .work-entry,
+    .supporting-list {
       grid-template-columns: 1fr;
     }
 

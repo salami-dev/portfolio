@@ -2,7 +2,6 @@
 import Callout from "@components/astro/Callout.astro";
 import Figure from "@components/astro/Figure.astro";
 import ContentLayout from "@layouts/ContentLayout.astro";
-import { formatStatus } from "@lib/content/status";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 import { workPath } from "@lib/routing/urls";
 import { getCollection, render } from "astro:content";
@@ -19,6 +18,7 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const mainImage = project.data.mainImage;
 const supportingImages = project.data.supportingImages;
+const pageEyebrow = project.data.featured ? "Case study" : "Project detail";
 const metadata = buildPageMetadata({
   title: project.data.title,
   description: project.data.summary,
@@ -28,9 +28,8 @@ const metadata = buildPageMetadata({
 });
 ---
 
-<ContentLayout metadata={metadata} eyebrow="Project story" title={project.data.title} summary={project.data.summary}>
+<ContentLayout metadata={metadata} eyebrow={pageEyebrow} title={project.data.title} summary={project.data.summary}>
   <div slot="meta" class="project-meta">
-    <span>{formatStatus(project.data.status)}</span>
     <span>{project.data.year}</span>
   </div>
 
@@ -55,11 +54,11 @@ const metadata = buildPageMetadata({
     </div>
     <dl>
       <div>
-        <dt>Owned</dt>
+        <dt>My responsibility</dt>
         <dd>{project.data.role}</dd>
       </div>
       <div>
-        <dt>Technical complexity</dt>
+        <dt>The hard part</dt>
         <dd>{project.data.complexity}</dd>
       </div>
       <div>
