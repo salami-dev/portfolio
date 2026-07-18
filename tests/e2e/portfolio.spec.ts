@@ -9,11 +9,12 @@ declare global {
 
 test("homepage navigation and project links work", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /I build the product surface/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Product interfaces/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Audicin V2/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Working approach" })).toBeVisible();
   await page.getByRole("link", { name: "View selected work" }).click();
   await expect(page).toHaveURL(/\/work\/$/);
-  await expect(page.getByRole("heading", { name: /Systems where product behavior/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Selected systems across product/ })).toBeVisible();
 });
 
 test("mobile menu exposes primary navigation", async ({ page, isMobile }) => {
@@ -36,7 +37,7 @@ test("project story pages support images and fallback media", async ({ page }) =
   await page.goto("/work/audicin-web/");
   await expect(page.getByRole("heading", { name: /Audicin Web/ })).toBeVisible();
   await expect(page.getByRole("img", { name: "Audicin web application interface." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "What the work covered" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Scope" })).toBeVisible();
 
   await page.goto("/work/bridger-web/");
   await expect(page.getByRole("heading", { name: /Bridger/ })).toBeVisible();

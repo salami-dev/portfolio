@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const mainImage = project.data.mainImage;
-const supportingImages = project.data.supportingImages;
+const supportingImages = project.data.supportingImages ?? [];
 const pageEyebrow = project.data.featured ? "Case study" : "Project detail";
 const metadata = buildPageMetadata({
   title: project.data.title,
@@ -49,12 +49,12 @@ const metadata = buildPageMetadata({
 
   <section class="project-brief" aria-labelledby="project-brief-heading">
     <div>
-      <p class="eyebrow">Technical thesis</p>
+      <p class="eyebrow">Technical focus</p>
       <h2 id="project-brief-heading">{project.data.thesis}</h2>
     </div>
     <dl>
       <div>
-        <dt>My responsibility</dt>
+        <dt>Responsibility</dt>
         <dd>{project.data.role}</dd>
       </div>
       <div>

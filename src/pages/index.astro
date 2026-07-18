@@ -12,7 +12,7 @@ const featuredProjects = (await getCollection("projects"))
 
 const metadata = buildPageMetadata({
   title: "Bashir Salami — Software Engineer & Technical Leader",
-  description: "I build product interfaces and the backend, data, cloud, and production systems behind them.",
+  description: "Product interfaces, backend systems, data, cloud infrastructure, and production operations.",
   path: "/"
 });
 
@@ -40,11 +40,11 @@ const capabilityAreas = [
   <section class="hero content-shell">
     <div class="hero__copy">
       <p class="eyebrow">SOFTWARE ENGINEER · TECHNICAL LEADER</p>
-      <h1>I build the product surface and the systems behind it.</h1>
-      <p class="lede">I design and ship software across frontend, backend, data, cloud infrastructure, and production operations. I am most useful when the problem crosses those boundaries and the parts have to work as one system.</p>
+      <h1>Product interfaces and the systems behind them.</h1>
+      <p class="lede">Software engineering across frontend, backend, data, cloud infrastructure, and production operations, with attention to how those layers behave as one product system.</p>
       <div class="hero__actions">
         <a class="button button-primary" href="/work/">View selected work</a>
-        <a class="button button-secondary" href="/about/">How I work</a>
+        <a class="button button-secondary" href="/about/">Working approach</a>
       </div>
     </div>
     <TechnicalHeroVisual />
@@ -53,8 +53,8 @@ const capabilityAreas = [
   <section class="section content-shell" aria-labelledby="engineering-system">
     <div class="section-heading">
       <p class="eyebrow">Across the system</p>
-      <h2 id="engineering-system">The work does not stop at the interface—or begin at the infrastructure.</h2>
-      <p>I build user-facing products, model backend domains, design data flows, automate delivery environments, and investigate production failures. That breadth matters because product behavior and system behavior are usually the same problem viewed from different layers.</p>
+      <h2 id="engineering-system">Product behavior and system behavior are usually connected.</h2>
+      <p>User workflows, backend state, data movement, deployment, and observability all shape the same experience. Good engineering makes those relationships visible enough to build, operate, and change safely.</p>
     </div>
     <div class="capability-grid">
       {capabilityAreas.map((area) => (
@@ -71,7 +71,7 @@ const capabilityAreas = [
       <div class="section-heading">
         <p class="eyebrow">Cross-disciplinary by necessity</p>
         <h2 id="cross-disciplinary">A production problem rarely stays inside one box.</h2>
-        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. I work across those boundaries so the system can be understood and fixed as a whole.</p>
+        <p>A user-facing failure can begin in the interface, originate in a service, worsen in the database, and remain invisible because the telemetry is incomplete. The fix usually depends on understanding the whole path.</p>
       </div>
       <div class="system-note" aria-hidden="true">
         <p>Interface</p>
@@ -85,15 +85,15 @@ const capabilityAreas = [
   <section class="section content-shell" aria-labelledby="selected-work">
     <div class="section-heading">
       <p class="eyebrow">Selected work</p>
-      <h2 id="selected-work">Selected systems where I owned more than one layer.</h2>
-      <p>These projects show different parts of my work: modernizing a product platform, building a browser application and its delivery path, and modelling financial workflows where identity, money movement, and recovery have to remain explicit.</p>
+      <h2 id="selected-work">Selected systems across product, platform, and operations.</h2>
+      <p>These projects cover platform modernization, browser product delivery, health-data integration, financial workflows, infrastructure, and production operations.</p>
     </div>
     <div class="selected-work-list">
       {featuredProjects.map((project) => (
         <article class="selected-work-card">
           <h3><a href={workPath(project.data.slug)}>{project.data.title}</a></h3>
           <p>{project.data.summary}</p>
-          <p class="owned"><strong>My responsibility:</strong> {project.data.role}</p>
+          <p class="owned"><strong>Responsibility:</strong> {project.data.role}</p>
         </article>
       ))}
     </div>
