@@ -53,11 +53,12 @@ test("project story pages support images and fallback media", async ({ page }) =
 test("about page explains whole-problem ownership and working style", async ({ page }) => {
   await page.goto("/about/");
   await expect(page.getByRole("heading", { name: "I like owning the whole problem, not just the technical part." })).toBeVisible();
+  await expect(page.getByText(/work across the boundaries between product, engineering, data, and operations/)).toBeVisible();
   await expect(page.getByText(/following the work beyond implementation/)).toBeVisible();
-  await expect(page.getByText(/business and partnership conversations/)).toBeVisible();
+  await expect(page.getByText(/breadth came from working in startups/)).toBeVisible();
+  await expect(page.getByText(/habit has carried beyond startup environments/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "How I work" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Outside work" })).toBeVisible();
-  await expect(page.getByText(/playing table tennis or travelling across West Africa/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Outside work" })).not.toBeAttached();
 });
 
 test("keyboard focus can reach primary actions", async ({ page }) => {
