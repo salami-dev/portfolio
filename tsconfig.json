@@ -3,15 +3,38 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "types": ["astro/client", "vitest/globals"],
+    "types": [
+      "astro/client",
+      "vitest/globals"
+    ],
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@content/*": ["src/content/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@lib/*": ["src/lib/*"],
-      "@styles/*": ["src/styles/*"]
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@content/*": [
+        "src/content/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ]
     }
   },
-  "include": [".astro/types.d.ts", "src/**/*", "src/content.config.ts", "astro.config.mjs", "vitest.config.ts", "playwright.config.ts"],
-  "exclude": ["dist"]
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "src/content.config.ts",
+    "astro.config.mjs",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "./worker-configuration.d.ts"
+  ],
+  "exclude": [
+    "dist"
+  ]
 }
