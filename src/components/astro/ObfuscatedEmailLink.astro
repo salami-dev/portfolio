@@ -1,0 +1,107 @@
+---
+type Props = {
+  class?: string;
+  compact?: boolean;
+};
+
+const className = Astro.props.class;
+const compact = Astro.props.compact ?? false;
+
+const encodedLocal = "122,104,115,104,116,112,53,105,104,122,111,112,121";
+const encodedDomain = "119,121,118,123,118,117,116,104,112,115,53,106,118,116";
+---
+
+<span
+  class:list={["email-reveal", className, { "email-reveal--compact": compact }]}
+  data-email-reveal
+  data-local={encodedLocal}
+  data-domain={encodedDomain}
+>
+  <button class="email-reveal__button" type="button" data-email-trigger aria-expanded="false">
+    Reveal email
+  </button>
+  <span class="email-reveal__result" data-email-result aria-live="polite"></span>
+</span>
+
+<script>
+  const decodePart = (value: string) =>
+    value
+      .split(",")
+      .map((code) => String.fromCharCode(Number.parseInt(code, 10) - 7))
+      .join("");
+
+  document.querySelectorAll<HTMLElement>("[data-email-reveal]").forEach((root) => {
+    const button = root.querySelector<HTMLButtonElement>("[data-email-trigger]");
+    const result = root.querySelector<HTMLElement>("[data-email-result]");
+    const local = root.dataset.local;
+    const domain = root.dataset.domain;
+
+    if (!button || !result || !local || !domain) {
+      return;
+    }
+
+    button.addEventListener("click", async () => {
+      const address = `${decodePart(local)}@${decodePart(domain)}`;
+      button.hidden = true;
+      button.setAttribute("aria-expanded", "true");
+      result.innerHTML = "";
+
+      const link = document.createElement("a");
+      link.href = `mailto:${address}`;
+      link.textContent = address;
+      link.setAttribute("aria-label", `Email ${address}`);
+
+      const copyButton = document.createElement("button");
+      copyButton.type = "button";
+      copyButton.textContent = "Copy";
+      copyButton.addEventListener("click", async () => {
+        await navigator.clipboard?.writeText(address);
+        copyButton.textContent = "Copied";
+      });
+
+      result.append(link, copyButton);
+    });
+  });
+</script>
+
+<style>
+  .email-reveal,
+  .email-reveal__result {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .email-reveal__button,
+  .email-reveal__result button {
+    min-height: 44px;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .email-reveal__result a {
+    color: var(--color-forest);
+    font-weight: 700;
+  }
+
+  :global(.site-footer) .email-reveal__button,
+  :global(.site-footer) .email-reveal__result button {
+    border-color: var(--color-dark-border);
+    background: var(--color-dark-surface);
+    color: white;
+  }
+
+  :global(.site-footer) .email-reveal__result a {
+    color: white;
+  }
+
+  .email-reveal--compact {
+    display: inline-flex;
+  }
+</style>

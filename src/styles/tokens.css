@@ -1,0 +1,72 @@
+@layer tokens {
+  :root {
+    --color-charcoal: #1f2937;
+    --color-stone: #6b7280;
+    --color-ivory: #faf7f2;
+    --color-forest: #0f766e;
+    --color-copper: #b45309;
+    --color-ink: #111827;
+    --color-paper: #fffdfc;
+    --color-sand: #e7e1d9;
+    --color-mist: #f2eee8;
+    --color-muted: #9ca3af;
+    --color-dark-surface: #18202b;
+    --color-dark-border: #2e3947;
+    --color-success: #15803d;
+    --color-warning: #b45309;
+    --color-error: #b91c1c;
+    --color-info: #0369a1;
+
+    --font-display: "DM Serif Display", Georgia, serif;
+    --font-body: "Source Sans 3", Inter, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+    --text-display-xl: clamp(3.5rem, 7vw, 7rem);
+    --text-display-l: clamp(2.75rem, 5vw, 5rem);
+    --text-heading-1: clamp(2.25rem, 4vw, 3.75rem);
+    --text-heading-2: clamp(1.75rem, 3vw, 2.75rem);
+    --text-heading-3: 1.5rem;
+    --text-body-l: 1.25rem;
+    --text-body: 1rem;
+    --text-body-s: 0.9rem;
+    --text-label: 0.75rem;
+    --text-mono-s: 0.78rem;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+    --space-10: 8rem;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+
+    --shadow-soft: 0 10px 30px rgb(17 24 39 / 0.08);
+    --shadow-deep: 0 18px 50px rgb(17 24 39 / 0.14);
+
+    --container-page: 1440px;
+    --container-standard: 1200px;
+    --container-wide: 1100px;
+    --container-case: 760px;
+    --container-reading: 680px;
+
+    --diagram-line: #6b7280;
+    --diagram-line-active: #0f766e;
+    --diagram-line-warning: #b45309;
+    --diagram-node: #fffdfc;
+    --diagram-node-dark: #18202b;
+    --diagram-label: #1f2937;
+
+    --duration-fast: 160ms;
+    --duration-base: 240ms;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --focus-ring: 0 0 0 3px rgb(15 118 110 / 0.22);
+  }
+}

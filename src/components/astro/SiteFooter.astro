@@ -1,0 +1,82 @@
+---
+import ObfuscatedEmailLink from "@components/astro/ObfuscatedEmailLink.astro";
+
+const isContactPage = Astro.url.pathname === "/contact/";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner content-shell">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2>Working through unclear problems is the part I like.</h2>
+    </div>
+    <div class="footer-flow" aria-label="Contact system flow">
+      <span>Interface</span>
+      <span>Systems</span>
+      <span>Evidence</span>
+    </div>
+    <address class="footer-links">
+      <ObfuscatedEmailLink />
+      <a href="https://github.com/salami-dev">GitHub</a>
+      <a href="https://www.linkedin.com/in/bashir-salami">LinkedIn</a>
+    </address>
+    {!isContactPage && <a class="button button-primary" href="/contact/">Start a conversation</a>}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-charcoal);
+    color: white;
+    padding-block: var(--space-8);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.55fr);
+  }
+
+  .site-footer h2 {
+    max-width: 760px;
+    color: white;
+  }
+
+  .site-footer .eyebrow {
+    color: white;
+  }
+
+  .footer-flow {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .footer-flow span {
+    border: 1px solid var(--color-dark-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-dark-surface);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    padding: var(--space-3);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-style: normal;
+  }
+
+  .footer-links a,
+  .footer-links :global(.email-reveal__button) {
+    color: white;
+  }
+
+  @media (max-width: 760px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

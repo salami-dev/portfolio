@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+
+@layer base {
+  html {
+    background: var(--color-ivory);
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    display: grid;
+    min-height: 100vh;
+    min-width: 320px;
+    background: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    grid-template-rows: auto 1fr auto;
+    line-height: 1.65;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  a {
+    color: var(--color-forest);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+    box-shadow: var(--focus-ring);
+  }
+
+  h1,
+  h2,
+  .display-heading {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  h1 {
+    font-size: var(--text-heading-1);
+    line-height: 1.05;
+  }
+
+  h2 {
+    font-size: var(--text-heading-2);
+    line-height: 1.15;
+  }
+
+  h3 {
+    color: var(--color-ink);
+    font-size: var(--text-heading-3);
+    line-height: 1.25;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+
+  pre {
+    overflow-x: auto;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    padding: var(--space-5);
+    font-size: var(--text-body-s);
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-body-s);
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--color-sand);
+    padding: var(--space-3);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+}

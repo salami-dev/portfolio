@@ -1,0 +1,138 @@
+---
+const navItems = [
+  { href: "/work/", label: "Work" },
+  { href: "/domains/", label: "Domains" },
+  { href: "/notes/", label: "Notes" },
+  { href: "/lab/", label: "Lab" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" }
+];
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="site-header__inner site-shell">
+    <a class="wordmark" href="/" aria-label="Bashir Salami home">Bashir Salami</a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {navItems.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</a>
+      ))}
+    </nav>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu">
+      <span>Menu</span>
+    </button>
+  </div>
+  <div class="mobile-sheet" id="mobile-menu" hidden>
+    <nav class="mobile-sheet__nav site-shell" aria-label="Mobile navigation">
+      {navItems.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>(".menu-button");
+  const sheet = document.querySelector<HTMLElement>("#mobile-menu");
+
+  button?.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    if (sheet) {
+      sheet.hidden = isOpen;
+    }
+    document.body.classList.toggle("menu-open", !isOpen);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid rgb(231 225 217 / 0.78);
+    background: rgb(250 247 242 / 0.94);
+    backdrop-filter: blur(12px);
+  }
+
+  .site-header__inner {
+    display: grid;
+    min-height: 72px;
+    align-items: center;
+    gap: var(--space-4);
+    grid-template-columns: 1fr auto;
+  }
+
+  .wordmark {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.18rem;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .desktop-nav a,
+  .mobile-sheet a {
+    color: var(--color-charcoal);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .desktop-nav a[aria-current="page"],
+  .mobile-sheet a[aria-current="page"] {
+    color: var(--color-forest);
+  }
+
+  .menu-button {
+    display: none;
+    min-height: 44px;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-charcoal);
+    font-weight: 700;
+    padding-inline: var(--space-4);
+  }
+
+  .mobile-sheet {
+    border-top: 1px solid var(--color-sand);
+    background: var(--color-paper);
+  }
+
+  .mobile-sheet__nav {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+  }
+
+  .mobile-sheet a {
+    min-height: 44px;
+    border-bottom: 1px solid var(--color-sand);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 2rem;
+  }
+
+  @media (max-width: 760px) {
+    .site-header__inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .desktop-nav {
+      display: none;
+    }
+
+    .menu-button {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+</style>

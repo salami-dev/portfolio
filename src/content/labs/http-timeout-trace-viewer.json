@@ -1,0 +1,13 @@
+{
+  "title": "HTTP timeout trace viewer",
+  "slug": "http-timeout-trace-viewer",
+  "summary": "Placeholder lab for reading timeout budgets across client, gateway, service, and database calls.",
+  "question": "Where should timeout budgets be spent across a request path?",
+  "disciplines": ["Backend Systems", "Cloud Infrastructure", "Reliability"],
+  "status": "planned",
+  "featured": true,
+  "publishedAt": "2026-07-18",
+  "cover": {
+    "alt": "Placeholder HTTP timeout trace diagram."
+  }
+}

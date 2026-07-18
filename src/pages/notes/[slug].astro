@@ -1,0 +1,34 @@
+---
+import Callout from "@components/astro/Callout.astro";
+import Figure from "@components/astro/Figure.astro";
+import ContentLayout from "@layouts/ContentLayout.astro";
+import { formatDisplayDate } from "@lib/content/dates";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { notePath } from "@lib/routing/urls";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+  return notes.map((note) => ({
+    params: { slug: note.data.slug },
+    props: { note }
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const metadata = buildPageMetadata({
+  title: note.data.title,
+  description: note.data.summary,
+  path: notePath(note.data.slug),
+  ogType: "article"
+});
+---
+
+<ContentLayout metadata={metadata} eyebrow={note.data.topic} title={note.data.title} summary={note.data.summary}>
+  <div slot="meta" class="metadata-row">
+    <span>{formatDisplayDate(note.data.publishedAt)}</span>
+    <span>{note.data.readingTime}</span>
+  </div>
+  <Content components={{ Callout, Figure }} />
+</ContentLayout>

@@ -1,0 +1,104 @@
+---
+import { formatStatus } from "@lib/content/status";
+import { workPath } from "@lib/routing/urls";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  project: CollectionEntry<"projects">;
+};
+
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <a class="project-card__link" href={workPath(project.data.slug)} aria-label={`View ${project.data.title} case study`}>
+    <div class="project-card__visual" role="img" aria-label={project.data.cover?.alt ?? `Technical placeholder for ${project.data.title}`}>
+      <span>{project.data.cover?.label ?? "Technical project placeholder"}</span>
+    </div>
+    <div class="project-card__body">
+      <p class="eyebrow">{formatStatus(project.data.status)}</p>
+      <h3>{project.data.title}</h3>
+      <p>{project.data.thesis}</p>
+      <div class="tag-list" aria-label="Disciplines">
+        {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
+      </div>
+      <p class="complexity"><strong>Technical complexity:</strong> {project.data.complexity}</p>
+      <span class="case-link">View case study -></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    container-type: inline-size;
+  }
+
+  .project-card__link {
+    display: grid;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-lg);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard);
+  }
+
+  .project-card__link:hover {
+    border-color: var(--color-forest);
+    box-shadow: var(--shadow-soft);
+    color: var(--color-charcoal);
+  }
+
+  .project-card__visual {
+    display: grid;
+    min-height: 220px;
+    place-items: center;
+    border-bottom: 1px solid var(--color-sand);
+    background:
+      radial-gradient(circle at 30% 35%, rgb(15 118 110 / 0.12), transparent 28%),
+      linear-gradient(135deg, var(--color-mist), var(--color-paper));
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  .project-card__link:hover .project-card__visual {
+    transform: translateY(-4px);
+  }
+
+  .project-card__visual span {
+    max-width: 24ch;
+    color: var(--color-stone);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    text-align: center;
+  }
+
+  .project-card__body {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .project-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 8cqi, 2.2rem);
+    font-weight: 400;
+  }
+
+  .complexity {
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+  }
+
+  .complexity strong {
+    color: var(--color-charcoal);
+  }
+
+  .case-link {
+    color: var(--color-forest);
+    font-weight: 700;
+  }
+</style>

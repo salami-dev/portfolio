@@ -1,0 +1,13 @@
+{
+  "title": "Zero-downtime migration sequence",
+  "slug": "zero-downtime-migration-sequence",
+  "summary": "Placeholder lab for staging backward-compatible schema and deployment changes.",
+  "question": "Which migration step creates the first irreversible production risk?",
+  "disciplines": ["Data Engineering", "Cloud Infrastructure", "Reliability", "Architecture"],
+  "status": "planned",
+  "featured": true,
+  "publishedAt": "2026-07-18",
+  "cover": {
+    "alt": "Placeholder zero-downtime migration sequence."
+  }
+}

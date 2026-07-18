@@ -1,0 +1,82 @@
+<figure class="hero-visual" aria-labelledby="hero-visual-title">
+  <figcaption id="hero-visual-title" class="sr-only">
+    Technical flow connecting interface, services, data, infrastructure, and observability.
+  </figcaption>
+  <div class="flow-node node-interface">Interface</div>
+  <div class="flow-line" aria-hidden="true"></div>
+  <div class="flow-node node-services">Services</div>
+  <div class="flow-line" aria-hidden="true"></div>
+  <div class="flow-node node-data">Data</div>
+  <div class="flow-line" aria-hidden="true"></div>
+  <div class="flow-node node-infra">Infrastructure</div>
+  <div class="flow-line flow-line--warning" aria-hidden="true"></div>
+  <div class="flow-node node-observe">Observability</div>
+</figure>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .hero-visual {
+    display: grid;
+    gap: var(--space-3);
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(var(--color-sand) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-sand) 1px, transparent 1px),
+      var(--color-paper);
+    background-size: 44px 44px;
+    padding: var(--space-5);
+  }
+
+  .flow-node {
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    font-weight: 600;
+    padding: var(--space-3);
+  }
+
+  .node-interface,
+  .node-observe {
+    border-color: var(--color-forest);
+  }
+
+  .node-data {
+    border-color: var(--color-copper);
+  }
+
+  .flow-line {
+    width: 2px;
+    min-height: 28px;
+    background: var(--diagram-line-active);
+    margin-inline-start: var(--space-5);
+  }
+
+  .flow-line--warning {
+    background: var(--diagram-line-warning);
+  }
+
+  @media (min-width: 820px) {
+    .hero-visual {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      align-items: center;
+    }
+
+    .flow-line {
+      width: 100%;
+      min-height: 2px;
+      margin: 0;
+    }
+  }
+</style>

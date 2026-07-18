@@ -1,0 +1,13 @@
+{
+  "title": "Incremental aggregation visualizer",
+  "slug": "incremental-aggregation-visualizer",
+  "summary": "Placeholder lab for explaining batch windows, late events, and aggregate correction.",
+  "question": "How should late-arriving events update an already published aggregate?",
+  "disciplines": ["Data Engineering", "Performance", "Architecture"],
+  "status": "planned",
+  "featured": true,
+  "publishedAt": "2026-07-18",
+  "cover": {
+    "alt": "Placeholder incremental aggregation diagram."
+  }
+}

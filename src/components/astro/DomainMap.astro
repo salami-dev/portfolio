@@ -1,0 +1,63 @@
+---
+const domains = [
+  "Interface Engineering",
+  "Product Systems",
+  "Backend and Workflows",
+  "Data and Computation",
+  "Cloud and Operations",
+  "Reliability and Performance"
+];
+---
+
+<div class="domain-map" aria-label="Connected domain map">
+  {domains.map((domain, index) => (
+    <a class="domain-layer" href={`/domains/#${domain.toLowerCase().replaceAll(" ", "-").replaceAll("and", "and")}`}>
+      <span class="domain-index">{String(index + 1).padStart(2, "0")}</span>
+      <span>{domain}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .domain-map {
+    display: grid;
+    gap: var(--space-3);
+    counter-reset: domains;
+  }
+
+  .domain-layer {
+    position: relative;
+    display: grid;
+    align-items: center;
+    gap: var(--space-4);
+    grid-template-columns: auto 1fr;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    padding: var(--space-4);
+    text-decoration: none;
+  }
+
+  .domain-layer:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 2rem;
+    width: 1px;
+    height: var(--space-3);
+    background: var(--color-forest);
+  }
+
+  .domain-layer:hover {
+    border-color: var(--color-forest);
+    color: var(--color-forest);
+  }
+
+  .domain-index {
+    color: var(--color-copper);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    font-weight: 600;
+  }
+</style>

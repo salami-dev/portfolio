@@ -1,0 +1,61 @@
+---
+title: "Designing failure states users can understand"
+slug: "failure-states-users-understand"
+summary: "A sample engineering note about making system failure visible, specific, and recoverable in product interfaces."
+topic: "Reliability and interface design"
+disciplines:
+  - Interface Engineering
+  - Reliability
+  - Product Systems
+status: "planned"
+featured: true
+publishedAt: 2026-07-18
+readingTime: "5 min read"
+cover:
+  alt: "Responsive technical figure placeholder for user-facing failure states."
+---
+
+Failure states are product behavior. A timeout, rejected write, stale cache, or partial outage still needs design, copy, hierarchy, and recovery logic.
+
+<Callout tone="note" title="Placeholder note">
+This article is a structured sample. It establishes the authoring format and technical writing surface without claiming a shipped incident or measured outcome.
+</Callout>
+
+## A failure state is a contract
+
+Useful failure states answer four questions:
+
+- what happened;
+- whether the user action was applied;
+- whether retry is safe;
+- what the user can do next.
+
+```ts
+type SaveState =
+  | { status: "idle" }
+  | { status: "saving" }
+  | { status: "saved"; savedAt: Date }
+  | { status: "failed"; retrySafe: boolean; message: string };
+```
+
+## Diagram placeholder
+
+<Figure caption="A future figure can compare ambiguous and actionable failure states.">
+
+```text
+User action -> request timeout -> state unknown -> safe recovery path
+```
+
+</Figure>
+
+## Recovery table
+
+| Failure | User-facing question | Interface requirement |
+| --- | --- | --- |
+| Timeout | Did my action work? | Show state uncertainty and safe retry guidance |
+| Validation error | What must change? | Associate specific errors with fields |
+| Partial outage | Can I continue? | Preserve completed work and disclose unavailable functions |
+
+## Writing style
+
+The useful version is specific and calm. It avoids blaming the user and avoids pretending that the system knows more than it does.

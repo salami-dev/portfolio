@@ -1,0 +1,70 @@
+---
+import Callout from "@components/astro/Callout.astro";
+import Figure from "@components/astro/Figure.astro";
+import ContentLayout from "@layouts/ContentLayout.astro";
+import { formatDisplayDate } from "@lib/content/dates";
+import { formatStatus } from "@lib/content/status";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { workPath } from "@lib/routing/urls";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const metadata = buildPageMetadata({
+  title: project.data.title,
+  description: project.data.summary,
+  path: workPath(project.data.slug),
+  ogType: "article"
+});
+---
+
+<ContentLayout metadata={metadata} eyebrow="Project case study" title={project.data.title} summary={project.data.summary}>
+  <div slot="meta" class="project-meta">
+    <span>{formatStatus(project.data.status)}</span>
+    <span>{project.data.year}</span>
+    <span>{project.data.role}</span>
+    <span>Published {formatDisplayDate(project.data.publishedAt)}</span>
+  </div>
+  <section class="project-thesis" aria-labelledby="technical-thesis">
+    <p class="eyebrow" id="technical-thesis">Technical thesis</p>
+    <p>{project.data.thesis}</p>
+    <div class="tag-list">
+      {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
+    </div>
+  </section>
+  <Content components={{ Callout, Figure }} />
+</ContentLayout>
+
+<style>
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    color: var(--color-stone);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+  }
+
+  .project-thesis {
+    display: grid;
+    gap: var(--space-4);
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    margin-bottom: var(--space-7);
+    padding: var(--space-5);
+  }
+
+  .project-thesis p:not(.eyebrow) {
+    color: var(--color-ink);
+    font-size: var(--text-body-l);
+  }
+</style>

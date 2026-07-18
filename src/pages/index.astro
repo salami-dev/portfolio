@@ -1,0 +1,163 @@
+---
+import DomainMap from "@components/astro/DomainMap.astro";
+import ProjectCard from "@components/astro/ProjectCard.astro";
+import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatDisplayDate } from "@lib/content/dates";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { notePath } from "@lib/routing/urls";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.displayOrder - b.data.displayOrder)
+  .slice(0, 3);
+
+const notes = (await getCollection("notes"))
+  .filter((note) => note.data.featured)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
+
+const metadata = buildPageMetadata({
+  title: "Personal Engineering Portfolio",
+  description: "A portfolio for engineering work across interfaces, backend systems, data, cloud, and operations.",
+  path: "/"
+});
+---
+
+<BaseLayout metadata={metadata}>
+  <section class="hero content-shell">
+    <div class="hero__copy">
+      <p class="eyebrow">CROSS-DISCIPLINARY ENGINEER</p>
+      <h1>I build interfaces, services, and data-backed systems that are easier to understand and maintain.</h1>
+      <p class="lede">I work across frontend, backend, data, cloud, and operations, usually where the shape of the problem is still being figured out.</p>
+      <div class="hero__actions">
+        <a class="button button-primary" href="/work/">View selected work</a>
+        <a class="button button-secondary" href="/notes/">Explore engineering notes</a>
+      </div>
+    </div>
+    <TechnicalHeroVisual />
+  </section>
+
+  <section class="section content-shell" aria-labelledby="selected-work">
+    <div class="section-heading">
+      <p class="eyebrow">Selected technical work</p>
+      <h2 id="selected-work">Project frames for how I think, build, and learn.</h2>
+    </div>
+    <div class="project-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="domain-map">
+    <div class="domain-section content-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Domain map</p>
+        <h2 id="domain-map">Technical layers influence each other.</h2>
+        <p>I try to understand those relationships before choosing an implementation path.</p>
+      </div>
+      <DomainMap />
+    </div>
+  </section>
+
+  <section class="section content-shell" aria-labelledby="engineering-notes">
+    <div class="section-heading">
+      <p class="eyebrow">Engineering notes</p>
+      <h2 id="engineering-notes">Notes from working through unclear technical questions.</h2>
+    </div>
+    <div class="note-list">
+      {notes.map((note) => (
+        <article class="note-row">
+          <p class="eyebrow">{note.data.topic}</p>
+          <h3><a href={notePath(note.data.slug)}>{note.data.title}</a></h3>
+          <p>{note.data.summary}</p>
+          <div class="metadata-row">
+            <span>{formatDisplayDate(note.data.publishedAt)}</span>
+            <span>{note.data.readingTime}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    align-items: center;
+    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.8fr);
+    padding-block: 128px 104px;
+  }
+
+  .hero__copy,
+  .section-heading {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .hero h1 {
+    max-width: 860px;
+    font-size: var(--text-display-l);
+    line-height: 1;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .project-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: var(--space-7);
+  }
+
+  .domain-section {
+    display: grid;
+    gap: var(--space-7);
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+  }
+
+  .section-heading p:not(.eyebrow) {
+    max-width: 62ch;
+    color: var(--color-stone);
+  }
+
+  .section-muted .section-heading p,
+  .section-muted .eyebrow {
+    color: var(--color-charcoal);
+  }
+
+  .note-list {
+    display: grid;
+    border-top: 1px solid var(--color-sand);
+    margin-top: var(--space-7);
+  }
+
+  .note-row {
+    display: grid;
+    gap: var(--space-3);
+    border-bottom: 1px solid var(--color-sand);
+    padding-block: var(--space-5);
+  }
+
+  .note-row h3 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .hero,
+    .domain-section,
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      padding-block: 88px 64px;
+    }
+  }
+</style>

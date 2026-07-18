@@ -1,0 +1,47 @@
+---
+import { WorkFilter } from "@components/react/WorkFilter/WorkFilter";
+import PageLayout from "@layouts/PageLayout.astro";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.displayOrder - b.data.displayOrder);
+const filterProjects = projects.map((project) => ({
+  title: project.data.title,
+  slug: project.data.slug,
+  thesis: project.data.thesis,
+  disciplines: project.data.disciplines,
+  status: project.data.status,
+  complexity: project.data.complexity
+}));
+
+const metadata = buildPageMetadata({
+  title: "Work",
+  description: "Selected projects and case-study frames across interface, backend, data, cloud, reliability, performance, and architecture.",
+  path: "/work/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="Work"
+  title="Projects shaped around real constraints, trade-offs, and open questions."
+  summary="This is where I keep deeper project writeups. Some are finished work, some are structured placeholders for investigations I want to build out properly."
+>
+  <section class="content-shell work-section" aria-label="Project filters and list">
+    <noscript>
+      <p class="no-script">Filtering requires JavaScript. All projects are listed below and remain fully accessible.</p>
+    </noscript>
+    <WorkFilter projects={filterProjects} client:load />
+  </section>
+</PageLayout>
+
+<style>
+  .work-section {
+    padding-block-end: var(--space-10);
+  }
+
+  .no-script {
+    margin-bottom: var(--space-5);
+    color: var(--color-stone);
+  }
+</style>

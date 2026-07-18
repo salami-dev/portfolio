@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Engineering Portfolio social preview</title>
+  <desc id="desc">Editorial technical preview with connected system layers.</desc>
+  <rect width="1200" height="630" fill="#FAF7F2"/>
+  <rect x="80" y="80" width="1040" height="470" rx="8" fill="#FFFDFC" stroke="#E7E1D9"/>
+  <text x="120" y="170" fill="#6B7280" font-family="monospace" font-size="24" letter-spacing="4">CROSS-DISCIPLINARY ENGINEER</text>
+  <text x="120" y="270" fill="#111827" font-family="Georgia, serif" font-size="72">I design systems,</text>
+  <text x="120" y="354" fill="#111827" font-family="Georgia, serif" font-size="72">build products, and solve</text>
+  <text x="120" y="438" fill="#111827" font-family="Georgia, serif" font-size="72">complex technical problems.</text>
+  <path d="M780 180H920V250H780zM820 295H960V365H820zM740 410H910V480H740z" fill="none" stroke="#0F766E" stroke-width="3"/>
+  <path d="M850 250v45M870 365v45" stroke="#B45309" stroke-width="3"/>
+</svg>

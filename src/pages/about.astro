@@ -1,0 +1,24 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+
+const metadata = buildPageMetadata({
+  title: "About",
+  description: "About Bashir Salami and the engineering approach behind this portfolio.",
+  path: "/about/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="About"
+  title="I like building software where the interface and the system have to make sense together."
+  summary="I am confident in the areas I have worked through, aware there is much more I do not understand yet, and interested in problems that require learning in public, testing assumptions, and improving the model."
+>
+  <section class="reading-shell mdx-content about-content">
+    <p>I work across interface, backend, data, and infrastructure concerns because useful products rarely fit cleanly into one layer.</p>
+    <p><strong>Placeholder:</strong> add personal background, operating principles, preferred problem spaces, and selected technical context.</p>
+    <h2>How I work</h2>
+    <p>I prefer explicit boundaries, typed contracts, accessible interfaces, and trade-offs that can be explained. I do not expect to know every answer upfront, but I do expect the work to become clearer as I test assumptions and reduce uncertainty.</p>
+  </section>
+</PageLayout>

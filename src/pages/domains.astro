@@ -1,0 +1,138 @@
+---
+import DomainMap from "@components/astro/DomainMap.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+
+const domains = [
+  {
+    id: "interface-engineering",
+    title: "Interface Engineering",
+    covers: "Product surfaces, stateful workflows, accessibility, and technical visualization.",
+    design: "Information architecture, interaction states, progressive enhancement, and design-system boundaries.",
+    implement: "Astro-rendered UI, focused React islands, accessible controls, and responsive technical figures.",
+    connects: "Connects user intent to backend workflows, observability, and failure recovery.",
+    projects: "Real-time System Topology Viewer; Visual Workflow Execution Debugger."
+  },
+  {
+    id: "product-systems",
+    title: "Product Systems",
+    covers: "Feature behavior, user workflows, domain models, and operational feedback loops.",
+    design: "End-to-end flows that preserve clarity through loading, empty, and failure states.",
+    implement: "Typed view models, semantic content boundaries, and measurable interface behavior.",
+    connects: "Connects interface decisions to data shape, service contracts, and system constraints.",
+    projects: "Visual Workflow Execution Debugger."
+  },
+  {
+    id: "backend-and-workflows",
+    title: "Backend and Workflows",
+    covers: "APIs, orchestration, queues, transactional boundaries, and failure recovery.",
+    design: "Service responsibilities, workflow state machines, idempotency, and retry policies.",
+    implement: "Typed adapters, explicit failure states, and testable workflow boundaries.",
+    connects: "Connects product actions to data consistency, infrastructure limits, and reliability signals.",
+    projects: "Database Contention Laboratory; Queue backpressure simulator."
+  },
+  {
+    id: "data-and-computation",
+    title: "Data and Computation",
+    covers: "Data modeling, aggregation, concurrency, analytics, and evidence generation.",
+    design: "Canonical data shapes, validation, lineage, and correction paths.",
+    implement: "Content schemas, experiments, visual explanations, and reproducible fixtures.",
+    connects: "Connects backend behavior to performance, observability, and product insight.",
+    projects: "Database Contention Laboratory; Incremental aggregation visualizer."
+  },
+  {
+    id: "cloud-and-operations",
+    title: "Cloud and Operations",
+    covers: "Static delivery, edge constraints, deployment safety, runtime configuration, and platform limits.",
+    design: "Cloudflare-compatible static systems, environment boundaries, and rollback-aware changes.",
+    implement: "Static Astro builds, deployable assets, route metadata, and operations-focused diagrams.",
+    connects: "Connects architecture decisions to reliability, performance, and deployment behavior.",
+    projects: "Real-time System Topology Viewer; HTTP timeout trace viewer."
+  },
+  {
+    id: "reliability-and-performance",
+    title: "Reliability and Performance",
+    covers: "Failure modes, observability, latency, contention, timeouts, and graceful degradation.",
+    design: "Evidence plans, fallback behavior, reduced-motion support, and clear operational surfaces.",
+    implement: "A11y tests, performance-aware hydration, failure-state content, and technical lab boundaries.",
+    connects: "Connects every layer back to user trust and measurable system behavior.",
+    projects: "All initial work and lab placeholders."
+  }
+];
+
+const metadata = buildPageMetadata({
+  title: "Domains",
+  description: "How engineering work connects interface, backend, data, cloud, reliability, performance, and architecture.",
+  path: "/domains/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="Domains"
+  title="I work best when I can see how the layers fit together."
+  summary="I know some parts well, I am still learning others, and I care about understanding the boundaries before pretending a problem is simple."
+>
+  <section class="content-shell domain-intro">
+    <DomainMap />
+  </section>
+  <section class="content-shell domain-list">
+    {domains.map((domain) => (
+      <article class="domain-entry" id={domain.id}>
+        <p class="eyebrow">{domain.title}</p>
+        <h2>{domain.covers}</h2>
+        <dl>
+          <div><dt>Design</dt><dd>{domain.design}</dd></div>
+          <div><dt>Implement</dt><dd>{domain.implement}</dd></div>
+          <div><dt>Connects</dt><dd>{domain.connects}</dd></div>
+          <div><dt>Demonstrated by</dt><dd>{domain.projects}</dd></div>
+        </dl>
+      </article>
+    ))}
+  </section>
+</PageLayout>
+
+<style>
+  .domain-intro {
+    max-width: 820px;
+    padding-block-end: var(--space-8);
+  }
+
+  .domain-list {
+    display: grid;
+    gap: var(--space-6);
+    padding-block-end: var(--space-10);
+  }
+
+  .domain-entry {
+    display: grid;
+    gap: var(--space-5);
+    border-top: 1px solid var(--color-sand);
+    padding-block-start: var(--space-6);
+  }
+
+  .domain-entry h2 {
+    max-width: 900px;
+  }
+
+  dl {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  dt {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  dd {
+    color: var(--color-stone);
+  }
+
+  @media (max-width: 900px) {
+    dl {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

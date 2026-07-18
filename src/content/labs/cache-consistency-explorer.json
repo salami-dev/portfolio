@@ -1,0 +1,13 @@
+{
+  "title": "Cache consistency explorer",
+  "slug": "cache-consistency-explorer",
+  "summary": "Placeholder lab for comparing stale reads, invalidation timing, and user-visible consistency trade-offs.",
+  "question": "When is stale content safer than blocking the user on a fresh read?",
+  "disciplines": ["Backend Systems", "Data Engineering", "Performance"],
+  "status": "planned",
+  "featured": true,
+  "publishedAt": "2026-07-18",
+  "cover": {
+    "alt": "Placeholder cache consistency diagram."
+  }
+}

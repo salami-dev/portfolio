@@ -1,0 +1,85 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { formatStatus } from "@lib/content/status";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { getCollection } from "astro:content";
+
+const labs = (await getCollection("labs")).sort((a, b) => a.data.title.localeCompare(b.data.title));
+const metadata = buildPageMetadata({
+  title: "Lab",
+  description: "Small technical demonstration placeholders for focused engineering questions.",
+  path: "/lab/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="Lab"
+  title="Smaller technical demonstrations with narrow questions."
+  summary="These entries reserve space for focused exhibits that do not need full case studies yet."
+>
+  <section class="content-shell lab-grid">
+    {labs.map((lab) => (
+      <article class="lab-entry">
+        <div class="lab-entry__visual" role="img" aria-label={lab.data.cover?.alt ?? `${lab.data.title} visual placeholder`}>
+          <span>{formatStatus(lab.data.status)}</span>
+        </div>
+        <div class="lab-entry__body">
+          <p class="eyebrow">Technical question</p>
+          <h2>{lab.data.title}</h2>
+          <p class="question">{lab.data.question}</p>
+          <p>{lab.data.summary}</p>
+          <a href="#" aria-disabled="true">Link placeholder</a>
+        </div>
+      </article>
+    ))}
+  </section>
+</PageLayout>
+
+<style>
+  .lab-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-block-end: var(--space-10);
+  }
+
+  .lab-entry {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-lg);
+    background: var(--color-paper);
+  }
+
+  .lab-entry__visual {
+    display: grid;
+    min-height: 170px;
+    place-items: center;
+    border-bottom: 1px solid var(--color-sand);
+    background: var(--color-mist);
+  }
+
+  .lab-entry__visual span {
+    color: var(--color-stone);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+  }
+
+  .lab-entry__body {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+
+  .question {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 820px) {
+    .lab-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

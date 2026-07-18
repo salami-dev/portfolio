@@ -1,0 +1,99 @@
+---
+title: "Real-time System Topology Viewer"
+slug: "system-topology-viewer"
+summary: "A planned engineering exhibit for inspecting service relationships, event flow, and operational risk in one topology view."
+thesis: "Operational interfaces become more useful when topology, state, and failure paths are visible in the same model."
+disciplines:
+  - Interface Engineering
+  - Backend Systems
+  - Data Engineering
+  - Cloud Infrastructure
+  - Reliability
+  - Architecture
+status: "planned"
+featured: true
+publishedAt: 2026-07-18
+repository:
+  label: "Repository placeholder"
+  url: "https://salami.tech/work/system-topology-viewer/#repository-placeholder"
+demo:
+  label: "Demo placeholder"
+  url: "https://salami.tech/work/system-topology-viewer/#demo-placeholder"
+cover:
+  alt: "Abstract system topology placeholder showing interface, service, data, infrastructure, and observability nodes."
+  label: "Future interactive topology viewer"
+complexity: "Coordinating real-time graph updates, accessible inspection states, and topology simplification without hiding failure paths."
+role: "Placeholder role: design and implementation ownership to be documented."
+year: "2026"
+displayOrder: 1
+---
+
+## System overview
+
+This is a structured placeholder for a future interactive engineering exhibit. The intended system is a topology viewer that connects product surfaces, backend services, data stores, infrastructure units, and observability signals into a single inspectable model.
+
+The initial portfolio version defines the case-study shape and diagram boundary. It does not claim the viewer has production traffic, users, or measured business impact.
+
+## Problem
+
+Teams often reason about incidents, feature delivery, and system ownership through separate artifacts: service diagrams, dashboards, runbooks, tickets, and architecture documents. This project investigates how those signals could be represented as a coherent operating model.
+
+## Constraints
+
+- Placeholder constraint: the graph must remain readable on mobile and desktop.
+- Placeholder constraint: every node needs a text equivalent for accessibility.
+- Placeholder constraint: future real-time updates must not require a global React application.
+- Placeholder constraint: stale or missing telemetry must be visible as a state, not hidden.
+
+## Interactive or visual demonstration area
+
+The first production pass reserves this area for a future React Flow island under `src/components/react/demos/SystemTopology/`.
+
+```text
+Interface -> Services -> Data -> Infrastructure -> Observability
+```
+
+## Architecture
+
+The intended boundary is:
+
+| Layer | Responsibility |
+| --- | --- |
+| Astro page | Static case-study structure and metadata |
+| Content collection | Project thesis, status, links, and authored narrative |
+| React island | Future graph interaction, keyboard inspection, and state filtering |
+| Fixture adapter | Future canonical topology model |
+
+## Difficult engineering decisions
+
+### Decision placeholder: graph simplification
+
+Alternatives include rendering every dependency, showing only critical paths, or grouping nodes by ownership boundary. The future implementation should document which model is selected and what detail it hides.
+
+### Decision placeholder: update model
+
+Future work should decide whether topology updates arrive as snapshots, patches, or event streams. Each option affects accessibility announcements, UI stability, and failure handling.
+
+## Failure modes
+
+- Telemetry source unavailable.
+- Node status stale beyond an explicit freshness window.
+- Edge link points to an unknown component.
+- Layout engine produces overlapping nodes.
+- User cannot inspect the graph with a keyboard or screen reader.
+
+## Evidence
+
+Evidence is intentionally pending. Future evidence should include tests, screenshots, accessibility results, topology fixtures, and performance traces. Do not add scale claims without measured data.
+
+## Trade-offs
+
+This project prioritizes explainability over visual density. The likely cost is that very large systems will require grouping, filtering, or separate focused diagrams.
+
+## Repository and demo links
+
+Repository and demo links are placeholders in frontmatter until real targets exist.
+
+## Retrospective
+
+Placeholder retrospective: document what the exhibit taught about interface design for operational systems after the first interactive implementation exists.

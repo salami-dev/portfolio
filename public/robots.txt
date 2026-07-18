@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://salami.tech/sitemap-index.xml

@@ -1,0 +1,34 @@
+---
+type Props = {
+  caption: string;
+};
+
+const { caption } = Astro.props;
+---
+
+<figure class="technical-figure">
+  <div class="technical-figure__frame">
+    <slot />
+  </div>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .technical-figure {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .technical-figure__frame {
+    overflow-x: auto;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-mist);
+    padding: var(--space-4);
+  }
+
+  figcaption {
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+  }
+</style>

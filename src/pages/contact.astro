@@ -1,0 +1,51 @@
+---
+import ObfuscatedEmailLink from "@components/astro/ObfuscatedEmailLink.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+
+const metadata = buildPageMetadata({
+  title: "Contact",
+  description: "Contact Bashir Salami about engineering work across product interfaces, systems, data, and infrastructure.",
+  path: "/contact/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="Contact"
+  title="Get in touch about thoughtful engineering work."
+  summary="Email is the easiest way to reach me. GitHub and LinkedIn are linked below as well."
+>
+  <section class="reading-shell contact-list" id="email">
+    <ObfuscatedEmailLink />
+    <a href="https://github.com/salami-dev">GitHub</a>
+    <a href="https://www.linkedin.com/in/bashir-salami">LinkedIn</a>
+    <noscript>
+      <p>Email is protected from basic scraping and requires JavaScript to reveal. GitHub and LinkedIn are available above.</p>
+    </noscript>
+  </section>
+</PageLayout>
+
+<style>
+  .contact-list {
+    display: grid;
+    gap: var(--space-4);
+    padding-block-end: var(--space-10);
+  }
+
+  .contact-list > :global(a),
+  .contact-list > :global(.email-reveal) {
+    min-height: 52px;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-weight: 700;
+    padding: var(--space-4);
+    text-decoration: none;
+  }
+
+  .contact-list > :global(.email-reveal) {
+    align-items: center;
+  }
+</style>

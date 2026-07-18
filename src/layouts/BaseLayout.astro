@@ -1,0 +1,44 @@
+---
+import SiteFooter from "@components/astro/SiteFooter.astro";
+import SiteHeader from "@components/astro/SiteHeader.astro";
+import type { PageMetadata } from "@lib/metadata/pageMetadata";
+import "@styles/global.css";
+
+type Props = {
+  metadata: PageMetadata;
+};
+
+const { metadata } = Astro.props;
+const socialImage = metadata.image ?? "/social-preview.svg";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{metadata.title}</title>
+    <meta name="description" content={metadata.description} />
+    <link rel="canonical" href={metadata.canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta property="og:title" content={metadata.title} />
+    <meta property="og:description" content={metadata.description} />
+    <meta property="og:type" content={metadata.ogType} />
+    <meta property="og:url" content={metadata.canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={metadata.title} />
+    <meta name="twitter:description" content={metadata.description} />
+    <meta name="twitter:image" content={socialImage} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link button button-primary" href="#main-content">Skip to content</a>
+    <SiteHeader />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

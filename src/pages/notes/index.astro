@@ -1,0 +1,59 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { formatDisplayDate } from "@lib/content/dates";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { notePath } from "@lib/routing/urls";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("notes")).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+const metadata = buildPageMetadata({
+  title: "Notes",
+  description: "Engineering notes on interface behavior, architecture, reliability, data systems, and technical communication.",
+  path: "/notes/"
+});
+---
+
+<PageLayout
+  metadata={metadata}
+  eyebrow="Notes"
+  title="Engineering notes with an editorial rhythm and technical artifacts."
+  summary="Short investigations, patterns, and explanations. The first entries are explicit placeholders that define the writing system."
+>
+  <section class="reading-shell notes-index">
+    {notes.map((note) => (
+      <article class="note-card">
+        <p class="eyebrow">{note.data.topic}</p>
+        <h2><a href={notePath(note.data.slug)}>{note.data.title}</a></h2>
+        <p>{note.data.summary}</p>
+        <div class="metadata-row">
+          <span>{formatDisplayDate(note.data.publishedAt)}</span>
+          <span>{note.data.readingTime}</span>
+        </div>
+      </article>
+    ))}
+  </section>
+</PageLayout>
+
+<style>
+  .notes-index {
+    display: grid;
+    gap: var(--space-5);
+    padding-block-end: var(--space-10);
+  }
+
+  .note-card {
+    display: grid;
+    gap: var(--space-3);
+    border-bottom: 1px solid var(--color-sand);
+    padding-block-end: var(--space-5);
+  }
+
+  .note-card h2 {
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+  }
+
+  .note-card h2 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+</style>

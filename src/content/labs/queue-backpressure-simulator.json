@@ -1,0 +1,13 @@
+{
+  "title": "Queue backpressure simulator",
+  "slug": "queue-backpressure-simulator",
+  "summary": "Placeholder lab for exploring queue growth, consumer throughput, and degradation controls.",
+  "question": "Which backpressure signal should trigger before queue delay becomes user-visible?",
+  "disciplines": ["Backend Systems", "Reliability", "Performance"],
+  "status": "planned",
+  "featured": true,
+  "publishedAt": "2026-07-18",
+  "cover": {
+    "alt": "Placeholder queue backpressure diagram."
+  }
+}
