@@ -11,7 +11,7 @@ const projects: WorkFilterProject[] = [
     thesis: "Interface thesis",
     disciplines: ["Interface Engineering"],
     status: "planned",
-    complexity: "Complexity placeholder"
+    complexity: "Complexity frame"
   },
   {
     title: "Data project",
@@ -19,7 +19,7 @@ const projects: WorkFilterProject[] = [
     thesis: "Data thesis",
     disciplines: ["Data Engineering"],
     status: "planned",
-    complexity: "Complexity placeholder"
+    complexity: "Complexity frame"
   }
 ];
 

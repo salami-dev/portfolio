@@ -1,22 +1,10 @@
 ---
-import { WorkFilter } from "@components/react/WorkFilter/WorkFilter";
 import PageLayout from "@layouts/PageLayout.astro";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
-import { getCollection } from "astro:content";
-
-const projects = (await getCollection("projects")).sort((a, b) => a.data.displayOrder - b.data.displayOrder);
-const filterProjects = projects.map((project) => ({
-  title: project.data.title,
-  slug: project.data.slug,
-  thesis: project.data.thesis,
-  disciplines: project.data.disciplines,
-  status: project.data.status,
-  complexity: project.data.complexity
-}));
 
 const metadata = buildPageMetadata({
   title: "Work",
-  description: "Selected projects and case-study frames across interface, backend, data, cloud, reliability, performance, and architecture.",
+  description: "Selected work by Bashir Salami across interface engineering, backend systems, data, cloud, reliability, performance, and architecture.",
   path: "/work/"
 });
 ---
@@ -24,24 +12,75 @@ const metadata = buildPageMetadata({
 <PageLayout
   metadata={metadata}
   eyebrow="Work"
-  title="Projects shaped around real constraints, trade-offs, and open questions."
-  summary="This is where I keep deeper project writeups. Some are finished work, some are structured placeholders for investigations I want to build out properly."
+  title="Selected work belongs here when it can be inspected."
+  summary="I am preparing concise writeups based on real systems, open-source work, working demonstrations, or technical investigations with enough substance to review."
 >
-  <section class="content-shell work-section" aria-label="Project filters and list">
-    <noscript>
-      <p class="no-script">Filtering requires JavaScript. All projects are listed below and remain fully accessible.</p>
-    </noscript>
-    <WorkFilter projects={filterProjects} client:load />
+  <section class="content-shell work-section" aria-labelledby="work-criteria">
+    <div class="work-panel">
+      <p class="eyebrow">Publishing criteria</p>
+      <h2 id="work-criteria">No fictional case studies.</h2>
+      <p>Each entry should state what was built, what made it difficult, which parts I owned, the important technical decisions, what can be inspected, and what changed or was learned.</p>
+    </div>
+    <div class="work-grid">
+      <article>
+        <h2>Real selected work</h2>
+        <p>Concise, anonymized engineering case studies based on work I am permitted to discuss.</p>
+      </article>
+      <article>
+        <h2>Open-source work</h2>
+        <p>Repositories with working code, documentation, tests, and a clear technical thesis.</p>
+      </article>
+      <article>
+        <h2>Current build</h2>
+        <p>A single technical demonstration in progress, published only when there is something meaningful to interact with or inspect.</p>
+      </article>
+    </div>
   </section>
 </PageLayout>
 
 <style>
   .work-section {
+    display: grid;
+    gap: var(--space-6);
     padding-block-end: var(--space-10);
   }
 
-  .no-script {
-    margin-bottom: var(--space-5);
+  .work-panel,
+  .work-grid article {
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    padding: var(--space-5);
+  }
+
+  .work-panel {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .work-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .work-grid article {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .work-grid h2 {
+    font-size: clamp(1.45rem, 3vw, 2rem);
+  }
+
+  .work-panel p:not(.eyebrow),
+  .work-grid p {
     color: var(--color-stone);
+  }
+
+  @media (max-width: 820px) {
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

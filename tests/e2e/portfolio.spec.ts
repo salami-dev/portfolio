@@ -9,26 +9,23 @@ declare global {
 
 test("homepage navigation and project links work", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /I build interfaces/ })).toBeVisible();
-  await page.getByRole("link", { name: "View selected work" }).click();
+  await expect(page.getByRole("heading", { name: /I build the product surface/ })).toBeVisible();
+  await page.getByRole("link", { name: "Explore my work" }).click();
   await expect(page).toHaveURL(/\/work\/$/);
-  await page.getByRole("link", { name: "Real-time System Topology Viewer", exact: true }).click();
-  await expect(page).toHaveURL(/\/work\/system-topology-viewer\/$/);
-  await expect(page.getByRole("heading", { name: "Real-time System Topology Viewer" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Selected work belongs here when it can be inspected." })).toBeVisible();
 });
 
 test("mobile menu exposes primary navigation", async ({ page, isMobile }) => {
   test.skip(!isMobile, "mobile-only navigation behavior");
   await page.goto("/");
   await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Lab" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Contact" })).toBeVisible();
 });
 
-test("work filtering narrows project list", async ({ page }) => {
+test("work page explains publishing criteria", async ({ page }) => {
   await page.goto("/work/");
-  await page.getByRole("button", { name: "Data Engineering" }).click();
-  await expect(page.getByRole("heading", { name: "Database Contention Laboratory" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Visual Workflow Execution Debugger" })).not.toBeVisible();
+  await expect(page.getByRole("heading", { name: "No fictional case studies." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Current build" })).toBeVisible();
 });
 
 test("keyboard focus can reach primary actions", async ({ page }) => {
