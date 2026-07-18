@@ -105,3 +105,14 @@ test("responsive layouts do not horizontally overflow", async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   expect(overflow).toBe(false);
 });
+
+test("homepage technical diagram keeps node labels inside their boxes on wide screens", async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 1000 });
+  await page.goto("/");
+
+  const overflowingLabels = await page.locator(".hero-visual .flow-node").evaluateAll((nodes) =>
+    nodes.filter((node) => node.scrollWidth > node.clientWidth).map((node) => node.textContent)
+  );
+
+  expect(overflowingLabels).toEqual([]);
+});

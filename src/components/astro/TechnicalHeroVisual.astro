@@ -2,15 +2,17 @@
   <figcaption id="hero-visual-title" class="sr-only">
     Technical flow connecting interface, services, data, infrastructure, and observability.
   </figcaption>
-  <div class="flow-node node-interface">Interface</div>
-  <div class="flow-line" aria-hidden="true"></div>
-  <div class="flow-node node-services">Services</div>
-  <div class="flow-line" aria-hidden="true"></div>
-  <div class="flow-node node-data">Data</div>
-  <div class="flow-line" aria-hidden="true"></div>
-  <div class="flow-node node-infra">Infrastructure</div>
-  <div class="flow-line flow-line--warning" aria-hidden="true"></div>
-  <div class="flow-node node-observe">Observability</div>
+  <div class="flow-diagram">
+    <div class="flow-node node-interface">Interface</div>
+    <div class="flow-line line-interface-services" aria-hidden="true"></div>
+    <div class="flow-node node-services">Services</div>
+    <div class="flow-line line-services-data" aria-hidden="true"></div>
+    <div class="flow-node node-data">Data</div>
+    <div class="flow-line line-data-infra" aria-hidden="true"></div>
+    <div class="flow-node node-infra">Infrastructure</div>
+    <div class="flow-line flow-line--warning line-infra-observe" aria-hidden="true"></div>
+    <div class="flow-node node-observe">Observability</div>
+  </div>
 </figure>
 
 <style>
@@ -24,8 +26,7 @@
   }
 
   .hero-visual {
-    display: grid;
-    gap: var(--space-3);
+    container-type: inline-size;
     border: 1px solid var(--color-sand);
     border-radius: var(--radius-lg);
     background:
@@ -34,6 +35,11 @@
       var(--color-paper);
     background-size: 44px 44px;
     padding: var(--space-5);
+  }
+
+  .flow-diagram {
+    display: grid;
+    gap: var(--space-3);
   }
 
   .flow-node {
@@ -45,6 +51,7 @@
     font-size: var(--text-mono-s);
     font-weight: 600;
     padding: var(--space-3);
+    white-space: nowrap;
   }
 
   .node-interface,
@@ -67,16 +74,58 @@
     background: var(--diagram-line-warning);
   }
 
-  @media (min-width: 820px) {
-    .hero-visual {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+  @container (min-width: 440px) {
+    .flow-diagram {
+      grid-template-columns: max-content minmax(24px, 1fr) max-content minmax(24px, 1fr) max-content;
       align-items: center;
+      justify-content: center;
     }
 
     .flow-line {
       width: 100%;
       min-height: 2px;
       margin: 0;
+    }
+
+    .node-interface,
+    .line-interface-services,
+    .node-services,
+    .line-services-data,
+    .node-data {
+      grid-row: 1;
+    }
+
+    .node-interface,
+    .node-infra {
+      grid-column: 1;
+    }
+
+    .line-interface-services,
+    .line-infra-observe {
+      grid-column: 2;
+    }
+
+    .node-services,
+    .node-observe {
+      grid-column: 3;
+    }
+
+    .line-services-data {
+      grid-column: 4;
+    }
+
+    .node-data {
+      grid-column: 5;
+    }
+
+    .line-data-infra {
+      display: none;
+    }
+
+    .node-infra,
+    .line-infra-observe,
+    .node-observe {
+      grid-row: 2;
     }
   }
 </style>
