@@ -1,0 +1,27 @@
+---
+title: "Bridger"
+slug: "bridger-web"
+context: "Bridger enabled businesses to acquire inventory through financing rather than paying the full cost upfront."
+impact: "Turned a multi-party financing process into structured, auditable software workflows supporting the full customer lifecycle."
+disciplines:
+  - Domain Modelling
+  - Payments
+  - Backend Systems
+status: "complete"
+featured: true
+publishedAt: 2026-07-18
+cover:
+  alt: "Technical frame representing inventory financing workflows, KYC, wallet, payments, repayments, and infrastructure."
+  label: "Financing backend + payments workflows"
+complexity: "Maintaining consistent financial state across external providers, multi-step operations, failed transactions, and partially completed workflows."
+role: "I worked on the backend workflows supporting onboarding, identity verification, financing origination, wallet state, payments, and repayment tracking."
+displayOrder: 5
+---
+
+## Financing lifecycle
+
+The backend represented the path from financing origination and identity checks through wallet activity, payments, and repayment. Each stage changed what actions were valid and what operations needed to happen next.
+
+## Failure boundaries
+
+Identity verification, money movement, and repayment can fail independently. The domain boundaries needed to keep those states distinguishable so an interrupted step did not make the whole financing lifecycle ambiguous.

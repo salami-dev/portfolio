@@ -1,11 +1,12 @@
-import type { Discipline, ProjectStatus, WorkFilterDiscipline } from "@lib/content/types";
+import type { Discipline, WorkFilterDiscipline } from "@lib/content/types";
 
 export type WorkFilterProject = {
   title: string;
   slug: string;
-  thesis: string;
+  context: string;
+  contribution: string;
+  impact: string;
   disciplines: Discipline[];
-  status: ProjectStatus;
   complexity: string;
 };
 

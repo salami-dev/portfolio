@@ -1,0 +1,66 @@
+---
+type Props = {
+  owned: string[];
+  collaborated: string[];
+};
+
+const { owned, collaborated } = Astro.props;
+---
+
+<aside class="responsibility-panel" aria-label="Project responsibilities and collaboration">
+  <section>
+    <h2>What I owned</h2>
+    <ul>
+      {owned.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+  <section>
+    <h2>Collaborated with</h2>
+    <ul>
+      {collaborated.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+</aside>
+
+<style>
+  .responsibility-panel {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    padding: var(--space-5);
+  }
+
+  section {
+    min-inline-size: 0;
+  }
+
+  h2 {
+    color: var(--color-copper);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  li {
+    padding-inline-start: var(--space-1);
+  }
+
+  @media (max-width: 760px) {
+    .responsibility-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

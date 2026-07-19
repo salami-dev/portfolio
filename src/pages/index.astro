@@ -1,40 +1,18 @@
 ---
 import TechnicalHeroVisual from "@components/astro/TechnicalHeroVisual.astro";
+import ProjectCard from "@components/astro/ProjectCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { buildProjectPortfolio } from "@lib/content/projects";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { getCollection } from "astro:content";
+
+const { featured: featuredProjects } = buildProjectPortfolio(await getCollection("projects"));
 
 const metadata = buildPageMetadata({
-  title: "Personal Engineering Portfolio",
-  description: "Bashir Salami builds product interfaces and the systems behind them across frontend, backend, data, cloud, and operations.",
+  title: "Bashir Salami — Software Engineer & Technical Leader",
+  description: "Product interfaces, backend systems, data, cloud infrastructure, and production operations.",
   path: "/"
 });
-
-const capabilityAreas = [
-  {
-    title: "Product and interface engineering",
-    body: "Responsive, accessible interfaces for workflows with substantial state, data, permissions, or operational complexity."
-  },
-  {
-    title: "Backend and system architecture",
-    body: "APIs, domain models, asynchronous workflows, integrations, migrations, and distributed processes designed around explicit failure modes."
-  },
-  {
-    title: "Data and analytical systems",
-    body: "Event collection, transformation pipelines, analytical models, data-quality controls, and interfaces that make complex information understandable."
-  },
-  {
-    title: "Cloud and production engineering",
-    body: "Infrastructure automation, delivery pipelines, observability, scaling, incident investigation, and the operating systems around production software."
-  }
-];
-
-const explorationTopics = [
-  "visualizing database contention",
-  "explaining queue backpressure",
-  "tracing timeout propagation across a request path",
-  "comparing cache-consistency strategies",
-  "making distributed workflow state inspectable"
-];
 ---
 
 <BaseLayout metadata={metadata}>
@@ -42,60 +20,34 @@ const explorationTopics = [
     <div class="hero__copy">
       <p class="eyebrow">SOFTWARE ENGINEER · TECHNICAL LEADER</p>
       <h1>I build the product surface and the systems behind it.</h1>
-      <p class="lede">I work across frontend engineering, backend architecture, data systems, cloud infrastructure, and production operations, connecting the layers that turn an idea into reliable software.</p>
+      <p class="lede">I design and ship software across frontend, backend, data, cloud infrastructure, and production operations. I am most useful when a problem crosses those boundaries.</p>
       <div class="hero__actions">
-        <a class="button button-primary" href="/work/">Explore my work</a>
-        <a class="button button-secondary" href="/about/">About how I work</a>
+        <a class="button button-primary" href="/work/">View work</a>
+        <a class="button button-secondary" href="/about/">How I work</a>
       </div>
     </div>
     <TechnicalHeroVisual />
   </section>
 
-  <section class="section content-shell" aria-labelledby="engineering-system">
-    <div class="section-heading">
-      <p class="eyebrow">Engineering across the system</p>
-      <h2 id="engineering-system">My work does not fit neatly into a single layer.</h2>
-      <p>I build interfaces, model backend domains, design data flows, automate infrastructure, and investigate production failures. The common thread is understanding how technical decisions affect the product, the people using it, and the engineers responsible for operating it.</p>
+  <section class="section section-muted" aria-labelledby="ownership">
+    <div class="ownership-section content-shell">
+      <h2 id="ownership">A problem rarely stays inside one box.</h2>
+      <div class="ownership-copy">
+        <p>A product issue might show up in the interface, come from a backend rule, depend on the data, or turn out to be a deployment problem. I am comfortable following it through those layers and staying with the work until the outcome is right.</p>
+        <p>Working in startups taught me not to treat a job description as the boundary of the problem. When the work has required it, I have also led product, business, and partnership conversations to help move the product forward.</p>
+      </div>
     </div>
-    <div class="capability-grid">
-      {capabilityAreas.map((area) => (
-        <article class="capability-card">
-          <h3>{area.title}</h3>
-          <p>{area.body}</p>
-        </article>
+  </section>
+
+  <section class="section content-shell" aria-labelledby="case-studies">
+    <div class="section-heading">
+      <h2 id="case-studies">Case studies</h2>
+      <p>Three products with different users, business models, and technical constraints.</p>
+    </div>
+    <div class="selected-work-list">
+      {featuredProjects.map((project) => (
+        <ProjectCard project={project} variant="home" />
       ))}
-    </div>
-  </section>
-
-  <section class="section section-muted" aria-labelledby="cross-disciplinary">
-    <div class="split-section content-shell">
-      <div class="section-heading">
-        <p class="eyebrow">Cross-disciplinary by necessity</p>
-        <h2 id="cross-disciplinary">A production problem rarely stays inside one box.</h2>
-        <p>A user-facing failure may begin in the interface, originate in a service, worsen in a database, and remain invisible because the telemetry is incomplete.</p>
-      </div>
-      <div class="system-note">
-        <p>I am most useful where the work requires more than implementing an isolated component: understanding the system, choosing the right boundary, building the solution, and making it operable.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section content-shell" aria-labelledby="selected-work">
-    <div class="section-heading">
-      <p class="eyebrow">Selected work</p>
-      <h2 id="selected-work">Case studies will appear when there is something meaningful to inspect.</h2>
-      <p>The next entries here will be based on real systems, permitted details, working code, or substantive technical analysis.</p>
-    </div>
-  </section>
-
-  <section class="section content-shell" aria-labelledby="currently-exploring">
-    <div class="section-heading">
-      <p class="eyebrow">Currently exploring</p>
-      <h2 id="currently-exploring">Focused demonstrations for one engineering question at a time.</h2>
-      <p>These will be published when they have a working demonstration, repository, or substantive analysis.</p>
-    </div>
-    <div class="topic-list" role="list">
-      {explorationTopics.map((topic) => <span role="listitem">{topic}</span>)}
     </div>
   </section>
 </BaseLayout>
@@ -127,42 +79,24 @@ const explorationTopics = [
     gap: var(--space-3);
   }
 
-  .capability-grid {
-    display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: var(--space-7);
-  }
-
-  .capability-card,
-  .system-note {
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-md);
-    background: var(--color-paper);
-    padding: var(--space-5);
-  }
-
-  .capability-card {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .capability-card h3 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-  }
-
-  .capability-card p,
-  .system-note p {
-    color: var(--color-stone);
-  }
-
-  .split-section {
+  .ownership-section {
     display: grid;
     gap: var(--space-7);
-    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1fr);
     align-items: start;
+  }
+
+  .ownership-section h2 {
+    max-width: 12ch;
+  }
+
+  .ownership-copy {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 62ch;
+    color: var(--color-charcoal);
+    font-size: var(--text-body-l);
+    line-height: 1.6;
   }
 
   .section-heading p:not(.eyebrow) {
@@ -170,32 +104,17 @@ const explorationTopics = [
     color: var(--color-stone);
   }
 
-  .section-muted .section-heading p,
-  .section-muted .eyebrow {
-    color: var(--color-charcoal);
-  }
-
-  .topic-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
-  }
-
-  .topic-list span {
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-pill);
-    background: var(--color-paper);
-    color: var(--color-charcoal);
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-    padding: 0.45rem 0.7rem;
+  .selected-work-list {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: var(--space-7);
   }
 
   @media (max-width: 900px) {
     .hero,
-    .split-section,
-    .capability-grid {
+    .ownership-section,
+    .selected-work-list {
       grid-template-columns: 1fr;
     }
 

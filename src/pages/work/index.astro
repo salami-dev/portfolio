@@ -1,10 +1,15 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
+import ProjectCard from "@components/astro/ProjectCard.astro";
+import { buildProjectPortfolio } from "@lib/content/projects";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { getCollection } from "astro:content";
+
+const { featured: flagshipProjects, supporting: supportingProjects } = buildProjectPortfolio(await getCollection("projects"));
 
 const metadata = buildPageMetadata({
-  title: "Work",
-  description: "Selected work by Bashir Salami across interface engineering, backend systems, data, cloud, reliability, performance, and architecture.",
+  title: "Engineering Work — Bashir Salami",
+  description: "Case studies across frontend engineering, backend systems, data platforms, cloud infrastructure, payments, and production operations.",
   path: "/work/"
 });
 ---
@@ -12,28 +17,20 @@ const metadata = buildPageMetadata({
 <PageLayout
   metadata={metadata}
   eyebrow="Work"
-  title="Selected work belongs here when it can be inspected."
-  summary="I am preparing concise writeups based on real systems, open-source work, working demonstrations, or technical investigations with enough substance to review."
+  title="Products for listening, wellbeing, inventory financing, and tuition payments."
+  summary="Built for consumers, external partners, and businesses, with software, data, delivery, and production systems shaped around each product."
 >
-  <section class="content-shell work-section" aria-labelledby="work-criteria">
-    <div class="work-panel">
-      <p class="eyebrow">Publishing criteria</p>
-      <h2 id="work-criteria">No fictional case studies.</h2>
-      <p>Each entry should state what was built, what made it difficult, which parts I owned, the important technical decisions, what can be inspected, and what changed or was learned.</p>
+  <section class="content-shell work-section" aria-label="Projects">
+    <div class="work-list work-list--flagship">
+      {flagshipProjects.map((project) => (
+        <ProjectCard project={project} variant="featured" />
+      ))}
     </div>
-    <div class="work-grid">
-      <article>
-        <h2>Real selected work</h2>
-        <p>Concise, anonymized engineering case studies based on work I am permitted to discuss.</p>
-      </article>
-      <article>
-        <h2>Open-source work</h2>
-        <p>Repositories with working code, documentation, tests, and a clear technical thesis.</p>
-      </article>
-      <article>
-        <h2>Current build</h2>
-        <p>A single technical demonstration in progress, published only when there is something meaningful to interact with or inspect.</p>
-      </article>
+
+    <div class="supporting-list">
+      {supportingProjects.map((project) => (
+        <ProjectCard project={project} variant="supporting" />
+      ))}
     </div>
   </section>
 </PageLayout>
@@ -45,41 +42,20 @@ const metadata = buildPageMetadata({
     padding-block-end: var(--space-10);
   }
 
-  .work-panel,
-  .work-grid article {
-    border: 1px solid var(--color-sand);
-    border-radius: var(--radius-md);
-    background: var(--color-paper);
-    padding: var(--space-5);
-  }
-
-  .work-panel {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  .work-grid {
+  .work-list {
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .work-grid article {
+  .supporting-list {
     display: grid;
-    gap: var(--space-3);
-  }
-
-  .work-grid h2 {
-    font-size: clamp(1.45rem, 3vw, 2rem);
-  }
-
-  .work-panel p:not(.eyebrow),
-  .work-grid p {
-    color: var(--color-stone);
+    gap: var(--space-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-7);
   }
 
   @media (max-width: 820px) {
-    .work-grid {
+    .supporting-list {
       grid-template-columns: 1fr;
     }
   }

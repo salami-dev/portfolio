@@ -1,0 +1,113 @@
+---
+type ArchitectureGroup = {
+  title: string;
+  items: string[];
+};
+
+type Props = {
+  groups: ArchitectureGroup[];
+  operations: string[];
+  caption: string;
+};
+
+const { groups, operations, caption } = Astro.props;
+---
+
+<figure class="system-architecture" aria-labelledby="system-architecture-caption">
+  <div class="system-architecture__flow">
+    {groups.map((group, index) => (
+      <section class="system-architecture__group">
+        <p class="system-architecture__label">{group.title}</p>
+        <ul>
+          {group.items.map((item) => <li>{item}</li>)}
+        </ul>
+        {index < groups.length - 1 && <span class="system-architecture__connector" aria-hidden="true">↓</span>}
+      </section>
+    ))}
+  </div>
+  <aside class="system-architecture__operations" aria-label="Operations supporting the architecture">
+    <p class="system-architecture__label">Operations</p>
+    <ul>
+      {operations.map((item) => <li>{item}</li>)}
+    </ul>
+  </aside>
+  <figcaption id="system-architecture-caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .system-architecture {
+    display: grid;
+    gap: var(--space-4);
+    margin-inline: 0;
+  }
+
+  .system-architecture__flow {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .system-architecture__group,
+  .system-architecture__operations {
+    position: relative;
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    background: var(--color-paper);
+    padding: var(--space-4);
+  }
+
+  .system-architecture__group:nth-child(2) {
+    border-color: var(--color-forest);
+  }
+
+  .system-architecture__label {
+    color: var(--color-copper);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+  }
+
+  li {
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-sm);
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    line-height: 1.35;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .system-architecture__connector {
+    position: absolute;
+    inset-block-start: calc(100% + var(--space-1));
+    inset-inline-start: 50%;
+    color: var(--color-forest);
+    font-family: var(--font-mono);
+    transform: translateX(-50%);
+  }
+
+  .system-architecture__operations {
+    border-inline-start: 4px solid var(--color-forest);
+    background: var(--color-mist);
+  }
+
+  .system-architecture__operations .system-architecture__label {
+    color: var(--color-forest);
+  }
+
+  figcaption {
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+  }
+</style>

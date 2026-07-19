@@ -4,7 +4,7 @@ import type { PageMetadata } from "@lib/metadata/pageMetadata";
 
 type Props = {
   metadata: PageMetadata;
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   summary: string;
 };
@@ -15,7 +15,7 @@ const { metadata, eyebrow, title, summary } = Astro.props;
 <BaseLayout metadata={metadata}>
   <article class="content-page">
     <header class="content-header reading-shell">
-      <p class="eyebrow">{eyebrow}</p>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h1>{title}</h1>
       <p class="lede">{summary}</p>
       <slot name="meta" />

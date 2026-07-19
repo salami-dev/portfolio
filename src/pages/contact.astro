@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 
 const metadata = buildPageMetadata({
   title: "Contact",
-  description: "Contact Bashir Salami about engineering work across product interfaces, systems, data, and infrastructure.",
+  description: "Discuss senior engineering and technical-leadership work involving product and system problems.",
   path: "/contact/"
 });
 ---
@@ -13,10 +13,11 @@ const metadata = buildPageMetadata({
 <PageLayout
   metadata={metadata}
   eyebrow="Contact"
-  title="Get in touch about thoughtful engineering work."
-  summary="Email is the easiest way to reach me. GitHub and LinkedIn are linked below as well."
+  title="Let’s discuss the product or system problem."
+  summary="I am available for senior engineering and technical-leadership work involving system modernization, data-intensive applications, cloud platforms, or production reliability."
 >
   <section class="reading-shell contact-list" id="email">
+    <p>Email is best for project and role inquiries. GitHub and LinkedIn are available for code, project, and professional background.</p>
     <ObfuscatedEmailLink />
     <a href="https://github.com/salami-dev">GitHub</a>
     <a href="https://www.linkedin.com/in/bashir-salami">LinkedIn</a>
@@ -31,6 +32,11 @@ const metadata = buildPageMetadata({
     display: grid;
     gap: var(--space-4);
     padding-block-end: var(--space-10);
+  }
+
+  .contact-list > p {
+    max-width: 62ch;
+    color: var(--color-stone);
   }
 
   .contact-list > :global(a),

@@ -4,6 +4,16 @@
     margin-inline: auto;
   }
 
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .content-shell {
     width: min(calc(100% - 2rem), var(--container-standard));
     margin-inline: auto;

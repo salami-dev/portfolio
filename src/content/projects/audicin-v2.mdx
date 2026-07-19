@@ -1,0 +1,391 @@
+---
+title: "Audicin V2"
+slug: "audicin-v2"
+context: "Audicin’s original CMS-backed application had become difficult to extend and could not support the company’s plans for personalization, deeper product analytics, and data-informed wellbeing experiences."
+impact: "I designed and implemented the new C#/.NET platform, migrated the live product with negligible interruption, and introduced the systems Audicin needed to measure listening behaviour, support research, and evolve beyond the limitations of its original CMS."
+disciplines:
+  - Backend Architecture
+  - Product Delivery
+  - Data Systems
+  - Cloud Infrastructure
+status: "complete"
+featured: true
+publishedAt: 2026-07-18
+cover:
+  alt: "Technical frame representing the live Audicin product, its replacement application platform, data systems, and production operations."
+  label: "Live product + platform replacement"
+role: "I scoped the V2 programme as a software engineer and was promoted to CTO as delivery began. Over the following months, I led a three-engineer team through a rebuild spanning the backend, mobile applications, cloud infrastructure, subscriptions, listening analytics, health-data processing, and internal administration."
+caseStudy:
+  subtitle: "Rebuilding a live product for personalization and measurable outcomes"
+  position: "Software Engineer → CTO"
+  period: "January–August 2025"
+  deliveryTeam: "Three engineers across backend, Android, and iOS"
+  scope: "Product definition, architecture, migration, subscriptions, analytics, data pipelines, infrastructure, internal tooling, and engineering leadership"
+linkLabel: "Read the case study"
+displayOrder: 1
+---
+
+Audicin already had a working consumer application, but the platform behind it was no longer suitable for where the product needed to go.
+
+The original backend was built with Strapi and Node.js around a generic CMS model. It could manage and distribute audio content, but it had become difficult to extend and suffered from performance, reliability, and product-control limitations. It could not provide the foundation Audicin needed for personalization, quantitative research, subscription management, wearable-data processing, and more detailed product analytics.
+
+I began scoping the replacement while working as a software engineer. I defined the technical direction, assessed what should be retained from the existing product, and proposed how the new platform could be introduced without abandoning users already running older versions of the mobile applications.
+
+As the programme moved into formal delivery in February 2025, I was promoted to CTO and led the three-engineer implementation team while remaining responsible for the backend, infrastructure, data systems, releases, and production operations. The product launched toward the end of August 2025.
+
+<ResponsibilityPanel
+  owned={[
+    "Backend architecture and implementation",
+    "Legacy-platform migration",
+    "Cloud infrastructure and delivery",
+    "Subscription and entitlement architecture",
+    "Listening analytics",
+    "Health-data pipelines",
+    "Audicin Sleep Score implementation",
+    "Internal administration tools",
+    "Mobile integration and release leadership",
+    "Engineering management"
+  ]}
+  collaborated={[
+    "CEO on business direction and approval",
+    "Chief scientist and researchers on scoring and studies",
+    "UI designer on the product experience",
+    "Android and iOS engineers on mobile delivery"
+  ]}
+/>
+
+## Why V2 was necessary
+
+Audicin was moving from a relatively static content application toward a product intended to become a more useful daily companion.
+
+The company wanted to better understand how people used its content, incorporate physiological and behavioural data, support research, and eventually make the experience more personalized. That required more control over product behaviour and data than the existing CMS-backed architecture could provide.
+
+V2 was therefore more than a visual refresh. It included:
+
+- a complete backend rewrite;
+- a new database and domain model;
+- refreshed Android and iOS applications;
+- a rebrand and updated product experience;
+- a new subscription and entitlement system;
+- listening-behaviour analytics;
+- the first health-data processing pipelines;
+- research-defined scoring capabilities;
+- replacement administration tools;
+- containerized cloud infrastructure;
+- a controlled deployment and rollback process.
+
+The objective was not simply to modernize the technology. It was to give Audicin a platform that could support the next stage of the product.
+
+## My role
+
+I led the technical direction and delivery of the programme.
+
+I personally designed and implemented the replacement C#/.NET backend, the database models, migration tooling, cloud infrastructure, deployment pipeline, observability, subscription architecture, product analytics integration, health-data workflows, and internal administration systems.
+
+I also led the technical integration work across the Android and iOS applications. The mobile engineers implemented their respective clients, while I coordinated API behaviour, reviewed flows, tested releases, and worked through compatibility and launch issues with them.
+
+A UI designer produced the final screen designs. I helped define the requirements and user flows, led discussions about what should be retained or changed from the original application, and provided substantial input into the product behaviour and implementation. The CEO retained final business approval, while the chief scientist owned the underlying research direction.
+
+As CTO, I managed three engineers and remained closely involved in implementation, release readiness, production support, and technical decision-making.
+
+<SystemArchitecture
+  groups={[
+    {
+      title: "Product clients and external providers",
+      items: ["Android application", "iOS application", "Internal administration", "Apple App Store", "Google Play", "Stripe", "Apple HealthKit"]
+    },
+    {
+      title: "Application platform",
+      items: ["AWS load balancer", "Containerized C#/.NET API", "Background jobs", "Provider synchronization", "Aurora database"]
+    },
+    {
+      title: "Data and research",
+      items: ["PostHog", "ClickHouse", "Python processing", "Dagster", "PostgreSQL", "S3", "Audicin Sleep Score"]
+    }
+  ]}
+  operations={["Git-based environment promotion", "AWS CodeDeploy", "EC2 Auto Scaling Groups", "Datadog", "OpenTelemetry"]}
+  caption="Audicin V2 system architecture, showing the product, application, data, and operational boundaries involved in the replacement."
+/>
+
+## Replacing the live platform
+
+The new platform was not compatible with the old one.
+
+The original Strapi system and the new C#/.NET platform used separate databases, different schemas, and different domain models. Existing users also had mobile application versions already distributed through the Apple App Store and Google Play, so the backend could not be replaced without considering those clients.
+
+I maintained compatible API behaviour for the older applications while introducing new endpoints for the refreshed clients. This allowed the new mobile applications to be rolled out gradually without immediately breaking users who had not yet updated.
+
+I wrote the scripts used to transform and migrate data from the legacy database into the new model. I also created comparison tooling to verify that important records—including users, tracks, and journeys—existed correctly in both systems before the final cutover.
+
+The migration process included:
+
+1. Testing the new backend against mobile versions already available in the app stores.
+2. Preparing and validating the transformed data.
+3. Placing the legacy platform into read-only mode.
+4. Temporarily preventing new registrations and writes.
+5. Running the final migration.
+6. Comparing critical records across the old and new systems.
+7. Moving traffic through the AWS load balancer to the replacement platform.
+8. Retaining the legacy system as a rollback path if existing mobile applications could not operate correctly.
+
+The transition was completed with negligible user-visible interruption.
+
+The important result was not just that the new backend launched. It was that a live product was moved between incompatible platforms without requiring all existing users to upgrade at once.
+
+## Separating authentication from access
+
+The original subscription design made external payment providers part of the authentication path.
+
+Whenever an authentication token was refreshed, the backend contacted Apple, Google Play, or Stripe to determine whether the user still had a valid subscription. This meant authentication depended on the latency and availability of third-party payment APIs.
+
+A transient provider failure could therefore be interpreted as a loss of access and cause a valid user to be logged out.
+
+The previous model also did not adequately represent:
+
+- which product or subscription the user had purchased;
+- renewals;
+- cancellations;
+- grace periods;
+- failed payments;
+- access provided by more than one source;
+- differences between Apple, Google Play, and Stripe subscription states.
+
+I replaced this with a provider-agnostic entitlement model.
+
+Each provider could retain its own subscription semantics, but the application consumed a consistent internal representation of whether a user was entitled to access a particular benefit. Provider communication and synchronization were moved away from the critical authentication path.
+
+This made it possible to handle Apple, Google Play, and Stripe consistently while still preserving the provider-specific details required for reconciliation and support.
+
+## Redesigning subscription and legal state
+
+The launch exposed a broader issue in how the application represented user state.
+
+V2 required existing users to accept updated terms and conditions. Under the inherited flow, a user who had not accepted the latest terms—or whose subscription could not be verified—could be removed from the application and forced to authenticate again.
+
+The system was treating several distinct conditions as though they were authentication failures:
+
+- whether the user was signed in;
+- whether the latest legal terms had been accepted;
+- whether the user had an active subscription;
+- whether an external provider was temporarily unavailable.
+
+Following the launch, I led a redesign that represented these as separate states.
+
+The user could remain authenticated while the application displayed the appropriate legal or subscription requirement. The backend enforced both legal acceptance and entitlement rules, while the mobile applications could guide users through resolving those conditions without removing them from their session.
+
+This also allowed Audicin to:
+
+- expose limited parts of the product before subscription;
+- keep registered users inside the application;
+- present paywalls dynamically;
+- offer targeted discounts;
+- retain user details for later engagement;
+- send notifications intended to bring users back;
+- update the user’s state without requiring another login.
+
+> Authentication, legal acceptance, and commercial entitlement are related, but they are not the same state.
+
+## Measuring actual listening behaviour
+
+Before this work, Audicin relied heavily on surveys and user recollection to understand listening habits and outcomes.
+
+Users could be asked what they listened to, how long they listened, and how the content made them feel. Those responses were useful, but they produced rough and sometimes unreliable estimates.
+
+I deployed PostHog and implemented behavioural tracking around the listening experience, including events for:
+
+- starting playback;
+- pausing;
+- resuming;
+- skipping;
+- completing content;
+- listening duration;
+- track and journey context.
+
+I also wrote the queries and processing logic required to convert raw playback events into meaningful sessions, summaries, and research-ready datasets.
+
+The data revealed how people actually used different types of content. It helped the team compare:
+
+- shorter and longer tracks;
+- different content categories;
+- listening duration;
+- content ordering;
+- use of binaural-beat frequencies;
+- completion and abandonment behaviour.
+
+This allowed Audicin to move from relying predominantly on qualitative reports toward combining those reports with observed behaviour.
+
+The resulting data supported statistically useful research studies and informed product decisions, including the organization and presentation of content.
+
+## Health data and the Audicin Sleep Score
+
+V2 also introduced the first version of Audicin’s health-data processing capability.
+
+The initial work focused on Apple HealthKit data. Raw records could overlap, arrive late, be revised, and come from different devices or applications. They therefore had to be normalized, aggregated, and processed before they could be used safely in the product.
+
+I built and operated an evolving data stack using:
+
+- Python;
+- Dagster;
+- PostgreSQL;
+- S3;
+- ClickHouse.
+
+I created the workflows used to ingest, transform, aggregate, and expose the health metrics required by the application and research team.
+
+The chief scientist and researchers defined the underlying scoring logic. I translated those research models into production Python implementations, integrated them into the data pipelines, and exposed the resulting output through the product.
+
+This work produced the user-facing **Audicin Sleep Score**, giving users a clearer interpretation of their sleep-related data rather than only showing disconnected raw metrics.
+
+The listening and health-data systems also created a foundation for later recommendation and personalization work.
+
+## Rebuilding delivery and production operations
+
+The inherited deployment process connected to a production server over SSH, pulled the latest source code, built it directly on the instance, and restarted the Node.js process with PM2.
+
+The process had several limitations:
+
+- production builds depended on the state of a particular server;
+- there was no dependable automated test gate;
+- health verification was limited;
+- rollback was not reliable;
+- permission and network-access issues could disrupt releases;
+- deployments carried unnecessary operational risk.
+
+I replaced this with a containerized delivery model.
+
+The V2 platform ran using:
+
+- Docker containers on EC2;
+- EC2 Auto Scaling Groups;
+- an AWS load balancer;
+- an autoscaling Aurora database cluster;
+- AWS CodeDeploy for deployment and rollback;
+- Git-based promotion between environments;
+- separate secrets and subdomains for isolated environments;
+- Datadog for logs and monitoring;
+- OpenTelemetry for application telemetry.
+
+I added automated backend tests, deployment verification, health checks, and container restart behaviour.
+
+Releases became repeatable and reversible. The team could deploy changes without relying on an individual server being in the correct state, and failures could be detected and recovered from more predictably.
+
+## Replacing the CMS administration layer
+
+Although the original CMS was not suitable as the core product backend, it provided useful administration capabilities that could not simply disappear.
+
+I built replacement tools for staff to manage the product and its users without relying on Strapi.
+
+The administration systems included:
+
+- uploading and publishing content;
+- managing the track catalogue;
+- creating and organizing journeys;
+- managing users;
+- assigning licences;
+- managing subscriptions;
+- viewing user and account activity;
+- administering legal requirements;
+- role-based access control;
+- granular staff permissions.
+
+This preserved the operational benefits of a CMS while allowing the core product architecture and data model to be designed around Audicin’s actual requirements.
+
+Partner, reseller, storefront, and web-acquisition capabilities were added later and belong to the separate Audicin Web and Partner Distribution case study.
+
+## Product and mobile delivery
+
+The mobile redesign was delivered by one Android engineer and one iOS engineer. A UI designer created the application wireframes and final visual screen designs.
+
+My contribution was to:
+
+- help define requirements and product flows;
+- lead discussions about what should be retained from the original application;
+- identify behaviours that needed to be redesigned;
+- align mobile behaviour with the backend and entitlement architecture;
+- define and review API integration;
+- test Android and iOS releases;
+- coordinate launch readiness;
+- investigate post-launch failures;
+- lead the technical remediation work.
+
+The CEO retained final approval from the business side, while I was responsible for ensuring that the proposed product behaviour was technically coherent and could be supported reliably in production.
+
+## Engineering leadership
+
+V2 was delivered by a small team carrying a broad workload.
+
+As CTO, I managed three engineers while continuing to own a substantial part of the implementation. My responsibilities included:
+
+- technical planning;
+- architecture;
+- work allocation;
+- code and implementation review;
+- release readiness;
+- production support;
+- quality control;
+- coordination across mobile, backend, design, research, and business;
+- managing workload and signs of burnout;
+- handling difficult performance conversations;
+- participating in technical investor due diligence;
+- evaluating and selecting vendors.
+
+I delegated clearly bounded implementation and testing tasks while retaining responsibility for the most critical architecture, migration, release, and production decisions.
+
+Leadership did not mean moving away from implementation. It meant taking responsibility for a larger part of the product and delivery context while remaining close to the work.
+
+<DecisionPanel
+  decisions={[
+    {
+      title: "Replace rather than extend",
+      explanation: "The existing CMS could not support the required domain control, personalization, analytics, or subscription complexity."
+    },
+    {
+      title: "Preserve compatibility during migration",
+      explanation: "Older mobile clients continued to function while refreshed applications were rolled out."
+    },
+    {
+      title: "Separate identity from entitlement",
+      explanation: "Authentication no longer depended directly on live subscription-provider checks."
+    },
+    {
+      title: "Observe behaviour directly",
+      explanation: "Playback instrumentation supplemented surveys with measurable listening data."
+    },
+    {
+      title: "Build immutable deployment artifacts",
+      explanation: "Containerized deployments replaced source builds performed directly on production servers."
+    }
+  ]}
+/>
+
+## Outcome
+
+Audicin V2 replaced a limiting CMS-backed application with a platform the company could continue shaping around its product and research goals.
+
+The work enabled Audicin to:
+
+- migrate a live product between incompatible platforms with negligible interruption;
+- support both existing and refreshed mobile applications during the transition;
+- release changes through a repeatable and reversible deployment process;
+- model subscription access consistently across Apple, Google Play, and Stripe;
+- prevent external provider failures from automatically becoming login failures;
+- represent authentication, legal acceptance, and subscription access independently;
+- keep users inside the product while they resolved access requirements;
+- measure actual listening behaviour instead of relying only on surveys;
+- use behavioural data in statistically useful research;
+- produce the user-facing Audicin Sleep Score;
+- process wearable and health data;
+- operate the product through purpose-built administration tools;
+- support further work in personalization, recommendations, partner distribution, and new data integrations.
+
+The most important outcome was flexibility. Audicin was no longer constrained by the assumptions and limitations of a generic CMS. The company had a product platform it could extend as its commercial, research, and personalization requirements evolved.
+
+## Reflection
+
+One of the most consequential decisions was choosing to replace the existing backend rather than continue bridging more capabilities onto it.
+
+A gradual accumulation of integrations around the CMS would have reduced the immediate delivery burden, but it would also have preserved the same architectural constraints. The complete rewrite was intensive, but it gave the company greater control over the domain model, subscriptions, data processing, product state, and future development.
+
+The project also accelerated my own development in data engineering. Listening events and health records introduced problems involving stateful processing, late-arriving records, changing source data, aggregation, and incremental computation.
+
+The first version of the data architecture did not begin with the lakehouse-style design I would choose today. Some parts have since been revised as the system and data volumes evolved. That experience changed how I now approach raw-data preservation, replayability, incremental processing, and analytical architecture.

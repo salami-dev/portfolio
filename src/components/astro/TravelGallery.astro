@@ -1,0 +1,127 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { groupTravelPhotos } from "@lib/content/travel";
+
+interface Props {
+  photos: CollectionEntry<"travel">["data"]["photos"];
+}
+
+const { photos } = Astro.props;
+const countryGroups = groupTravelPhotos(photos);
+const usesOpenStreetMap = photos.some((photo) => photo.locationSource === "openstreetmap");
+---
+
+<div class="travel-groups" data-travel-gallery>
+  {countryGroups.map((countryGroup, countryIndex) => {
+    const countryHeadingId = `travel-country-${countryIndex}`;
+    return (
+      <section class="travel-country" aria-labelledby={countryHeadingId} data-travel-country>
+        <h3 id={countryHeadingId}>{countryGroup.country}</h3>
+        {countryGroup.cities.map((cityGroup, cityIndex) => {
+          const cityHeadingId = `travel-city-${countryIndex}-${cityIndex}`;
+          return (
+            <section class="travel-city" aria-labelledby={cityHeadingId} data-travel-city>
+              <h4 id={cityHeadingId}>{cityGroup.city}</h4>
+              <div class="travel-gallery">
+                {cityGroup.photos.map((photo) => (
+                  <figure class="travel-gallery__item">
+                    <Image
+                      src={photo.image}
+                      alt={photo.alt}
+                      widths={[480, 720, 960]}
+                      sizes="(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw"
+                      loading="lazy"
+                    />
+                    <figcaption>
+                      <span>{photo.location}</span>
+                      {photo.caption && <span>{photo.caption}</span>}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </section>
+    );
+  })}
+  {usesOpenStreetMap && (
+    <p class="travel-attribution">
+      Location names derived from camera GPS data using <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.
+    </p>
+  )}
+</div>
+
+<style>
+  .travel-groups,
+  .travel-country,
+  .travel-city {
+    display: grid;
+  }
+
+  .travel-groups {
+    gap: var(--space-8);
+  }
+
+  .travel-country {
+    gap: var(--space-6);
+  }
+
+  .travel-country h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-heading-2);
+    font-weight: 400;
+  }
+
+  .travel-city {
+    gap: var(--space-4);
+  }
+
+  .travel-city h4 {
+    color: var(--color-stone);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .travel-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-6);
+  }
+
+  .travel-gallery__item {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+
+  .travel-gallery__item :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--color-mist);
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+    line-height: 1.55;
+  }
+
+  figcaption span:first-child {
+    color: var(--color-charcoal);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+  }
+
+  .travel-attribution {
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+  }
+</style>

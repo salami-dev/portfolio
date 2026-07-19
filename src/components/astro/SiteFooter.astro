@@ -7,20 +7,14 @@ const isContactPage = Astro.url.pathname === "/contact/";
 <footer class="site-footer">
   <div class="site-footer__inner content-shell">
     <div>
-      <p class="eyebrow">Contact</p>
-      <h2>Let's work on something technically meaningful.</h2>
-    </div>
-    <div class="footer-flow" aria-label="Contact system flow">
-      <span>Interface</span>
-      <span>Systems</span>
-      <span>Evidence</span>
+      <h2>Have a product or system problem that crosses technical boundaries?</h2>
     </div>
     <address class="footer-links">
       <ObfuscatedEmailLink compact />
       <a href="https://github.com/salami-dev">GitHub</a>
       <a href="https://www.linkedin.com/in/bashir-salami">LinkedIn</a>
     </address>
-    {!isContactPage && <a class="button button-primary" href="/contact/">Start a conversation</a>}
+    {!isContactPage && <a class="button button-primary" href="/contact/">Get in touch</a>}
   </div>
 </footer>
 
@@ -34,32 +28,12 @@ const isContactPage = Astro.url.pathname === "/contact/";
   .site-footer__inner {
     display: grid;
     gap: var(--space-6);
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.55fr);
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .site-footer h2 {
     max-width: 760px;
     color: white;
-  }
-
-  .site-footer .eyebrow {
-    color: white;
-  }
-
-  .footer-flow {
-    display: grid;
-    gap: var(--space-3);
-    align-content: start;
-  }
-
-  .footer-flow span {
-    border: 1px solid var(--color-dark-border);
-    border-radius: var(--radius-sm);
-    background: var(--color-dark-surface);
-    color: white;
-    font-family: var(--font-mono);
-    font-size: var(--text-mono-s);
-    padding: var(--space-3);
   }
 
   .footer-links {

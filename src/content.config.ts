@@ -19,13 +19,27 @@ const sharedVisualSchema = z
   })
   .optional();
 
+const projectImageSchema = z.object({
+  src: z.string().startsWith("/"),
+  alt: z.string(),
+  caption: z.string().optional()
+});
+
+const caseStudyMetadataSchema = z.object({
+  subtitle: z.string(),
+  position: z.string(),
+  period: z.string(),
+  deliveryTeam: z.string(),
+  scope: z.string()
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/projects" }),
   schema: z.object({
     title: z.string(),
     slug: z.string(),
-    summary: z.string(),
-    thesis: z.string(),
+    context: z.string(),
+    impact: z.string(),
     disciplines: z.array(disciplineSchema).min(1),
     status: statusSchema,
     featured: z.boolean().default(false),
@@ -34,9 +48,12 @@ const projects = defineCollection({
     repository: linkSchema,
     demo: linkSchema,
     cover: sharedVisualSchema,
-    complexity: z.string(),
+    mainImage: projectImageSchema.optional(),
+    supportingImages: z.array(projectImageSchema).default([]),
+    complexity: z.string().optional(),
     role: z.string(),
-    year: z.string(),
+    linkLabel: z.string().optional(),
+    caseStudy: caseStudyMetadataSchema.optional(),
     displayOrder: z.number().int().nonnegative().default(100)
   })
 });
@@ -78,4 +95,24 @@ const labs = defineCollection({
   })
 });
 
-export const collections = { projects, notes, labs };
+const travel = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/travel" }),
+  schema: ({ image }) =>
+    z.object({
+      photos: z.array(
+        z.object({
+          image: image(),
+          alt: z.string().min(1),
+          location: z.string().min(1),
+          country: z.string().min(1).optional(),
+          city: z.string().min(1).optional(),
+          locationSource: z.enum(["embedded", "openstreetmap", "none"]).default("none"),
+          capturedAt: z.coerce.date().optional(),
+          caption: z.string().optional(),
+          displayOrder: z.number().int().nonnegative().default(100)
+        })
+      )
+    })
+});
+
+export const collections = { projects, notes, labs, travel };

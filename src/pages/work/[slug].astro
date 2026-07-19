@@ -1,0 +1,203 @@
+---
+import Callout from "@components/astro/Callout.astro";
+import DecisionPanel from "@components/astro/DecisionPanel.astro";
+import Figure from "@components/astro/Figure.astro";
+import ResponsibilityPanel from "@components/astro/ResponsibilityPanel.astro";
+import SystemArchitecture from "@components/astro/SystemArchitecture.astro";
+import ContentLayout from "@layouts/ContentLayout.astro";
+import { buildPageMetadata } from "@lib/metadata/pageMetadata";
+import { workPath } from "@lib/routing/urls";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const mainImage = project.data.mainImage;
+const supportingImages = project.data.supportingImages ?? [];
+const caseStudy = project.data.caseStudy;
+const projectFacts = caseStudy
+  ? [
+      { label: "Role", value: caseStudy.position },
+      { label: "Period", value: caseStudy.period },
+      { label: "Delivery team", value: caseStudy.deliveryTeam },
+      { label: "Scope", value: caseStudy.scope }
+    ]
+  : [
+      { label: "Responsibility", value: project.data.role },
+      { label: "Impact", value: project.data.impact }
+    ];
+const metadata = buildPageMetadata({
+  title: project.data.title,
+  description: project.data.context,
+  path: workPath(project.data.slug),
+  ogType: "article",
+  image: mainImage?.src
+});
+---
+
+<ContentLayout metadata={metadata} title={project.data.title} summary={caseStudy?.subtitle ?? project.data.context}>
+  <section class="project-hero-media" aria-labelledby="project-media-heading">
+    <h2 id="project-media-heading" class="visually-hidden">Project media</h2>
+    {mainImage ? (
+      <figure class="project-image project-image--main">
+        <img src={mainImage.src} alt={mainImage.alt} loading="eager" decoding="async" />
+        {mainImage.caption && <figcaption>{mainImage.caption}</figcaption>}
+      </figure>
+    ) : (
+      <div class="project-media-frame" role="img" aria-label={project.data.cover?.alt ?? `Technical visual frame for ${project.data.title}`}>
+        <span>{project.data.cover?.label ?? "Technical visual frame"}</span>
+      </div>
+    )}
+  </section>
+
+  <section class="project-brief" aria-labelledby="project-brief-heading" data-project-facts>
+    <h2 id="project-brief-heading" class="visually-hidden">Project brief</h2>
+    <dl>
+      {projectFacts.map((fact) => (
+        <div>
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+      <div>
+        <dt>Disciplines</dt>
+        <dd>
+          <span class="tag-list">
+            {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
+          </span>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <Content components={{ Callout, DecisionPanel, Figure, ResponsibilityPanel, SystemArchitecture }} />
+
+  {supportingImages.length > 0 && (
+    <section class="supporting-media" aria-labelledby="supporting-media-heading">
+      <h2 id="supporting-media-heading">Screens and diagrams</h2>
+      <div class="supporting-media__grid">
+        {supportingImages.map((image) => (
+          <figure class="project-image">
+            <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+            {image.caption && <figcaption>{image.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+</ContentLayout>
+
+<style>
+  .project-hero-media {
+    margin-bottom: var(--space-7);
+  }
+
+  .project-image,
+  .project-media-frame,
+  .project-brief,
+  .supporting-media {
+    border: 1px solid var(--color-sand);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+  }
+
+  .project-image {
+    display: grid;
+    gap: var(--space-3);
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .project-image img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .project-image figcaption {
+    color: var(--color-stone);
+    font-size: var(--text-body-s);
+    padding: 0 var(--space-4) var(--space-4);
+  }
+
+  .project-media-frame {
+    display: grid;
+    min-block-size: 320px;
+    place-items: center;
+    background:
+      linear-gradient(135deg, rgb(15 118 110 / 0.1), transparent 45%),
+      linear-gradient(160deg, var(--color-mist), var(--color-paper));
+    padding: var(--space-7);
+  }
+
+  .project-media-frame span {
+    max-inline-size: 26ch;
+    color: var(--color-stone);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    text-align: center;
+  }
+
+  .project-brief {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: var(--space-7);
+    padding: var(--space-5);
+  }
+
+  dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  dl div {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  dt {
+    color: var(--color-copper);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-s);
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--color-stone);
+  }
+
+  .supporting-media {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+    padding: var(--space-5);
+  }
+
+  .supporting-media__grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 760px) {
+    .project-media-frame {
+      min-block-size: 220px;
+      padding: var(--space-5);
+    }
+
+    .supporting-media__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
