@@ -1,6 +1,9 @@
 ---
 import Callout from "@components/astro/Callout.astro";
+import DecisionPanel from "@components/astro/DecisionPanel.astro";
 import Figure from "@components/astro/Figure.astro";
+import ResponsibilityPanel from "@components/astro/ResponsibilityPanel.astro";
+import SystemArchitecture from "@components/astro/SystemArchitecture.astro";
 import ContentLayout from "@layouts/ContentLayout.astro";
 import { buildPageMetadata } from "@lib/metadata/pageMetadata";
 import { workPath } from "@lib/routing/urls";
@@ -18,6 +21,18 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const mainImage = project.data.mainImage;
 const supportingImages = project.data.supportingImages ?? [];
+const caseStudy = project.data.caseStudy;
+const projectFacts = caseStudy
+  ? [
+      { label: "Role", value: caseStudy.position },
+      { label: "Period", value: caseStudy.period },
+      { label: "Delivery team", value: caseStudy.deliveryTeam },
+      { label: "Scope", value: caseStudy.scope }
+    ]
+  : [
+      { label: "Responsibility", value: project.data.role },
+      { label: "Impact", value: project.data.impact }
+    ];
 const metadata = buildPageMetadata({
   title: project.data.title,
   description: project.data.context,
@@ -27,7 +42,7 @@ const metadata = buildPageMetadata({
 });
 ---
 
-<ContentLayout metadata={metadata} title={project.data.title} summary={project.data.context}>
+<ContentLayout metadata={metadata} title={project.data.title} summary={caseStudy?.subtitle ?? project.data.context}>
   <section class="project-hero-media" aria-labelledby="project-media-heading">
     <h2 id="project-media-heading" class="visually-hidden">Project media</h2>
     {mainImage ? (
@@ -42,17 +57,15 @@ const metadata = buildPageMetadata({
     )}
   </section>
 
-  <section class="project-brief" aria-labelledby="project-brief-heading">
+  <section class="project-brief" aria-labelledby="project-brief-heading" data-project-facts>
     <h2 id="project-brief-heading" class="visually-hidden">Project brief</h2>
     <dl>
-      <div>
-        <dt>Responsibility</dt>
-        <dd>{project.data.role}</dd>
-      </div>
-      <div>
-        <dt>Impact</dt>
-        <dd>{project.data.impact}</dd>
-      </div>
+      {projectFacts.map((fact) => (
+        <div>
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
       <div>
         <dt>Disciplines</dt>
         <dd>
@@ -64,7 +77,7 @@ const metadata = buildPageMetadata({
     </dl>
   </section>
 
-  <Content components={{ Callout, Figure }} />
+  <Content components={{ Callout, DecisionPanel, Figure, ResponsibilityPanel, SystemArchitecture }} />
 
   {supportingImages.length > 0 && (
     <section class="supporting-media" aria-labelledby="supporting-media-heading">

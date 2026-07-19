@@ -12,7 +12,7 @@ type Props = {
 const { project, variant } = Astro.props;
 const isFeatured = variant === "featured";
 const headingClass = variant === "home" ? "project-card__title project-card__title--home" : "project-card__title";
-const linkLabel = variant === "supporting" ? "Read project" : "Read case study";
+const linkLabel = project.data.linkLabel ?? (variant === "supporting" ? "Read project" : "Read case study");
 ---
 
 <article class:list={["project-card", `project-card--${variant}`]} data-project-card data-card-variant={variant}>
@@ -41,8 +41,10 @@ const linkLabel = variant === "supporting" ? "Read project" : "Read case study";
       {project.data.disciplines.map((discipline) => <span class="tag">{discipline}</span>)}
     </div>
 
-    <p class="project-card__challenge"><strong>Key challenge:</strong> {project.data.complexity}</p>
-    <a class="project-card__link" href={workPath(project.data.slug)}>{linkLabel} →</a>
+    {project.data.complexity && (
+      <p class="project-card__challenge"><strong>Key challenge:</strong> {project.data.complexity}</p>
+    )}
+    <a class="project-card__link" href={workPath(project.data.slug)}>{linkLabel} <span aria-hidden="true">→</span></a>
   </div>
 </article>
 

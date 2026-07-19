@@ -25,6 +25,14 @@ const projectImageSchema = z.object({
   caption: z.string().optional()
 });
 
+const caseStudyMetadataSchema = z.object({
+  subtitle: z.string(),
+  position: z.string(),
+  period: z.string(),
+  deliveryTeam: z.string(),
+  scope: z.string()
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/projects" }),
   schema: z.object({
@@ -42,8 +50,10 @@ const projects = defineCollection({
     cover: sharedVisualSchema,
     mainImage: projectImageSchema.optional(),
     supportingImages: z.array(projectImageSchema).default([]),
-    complexity: z.string(),
+    complexity: z.string().optional(),
     role: z.string(),
+    linkLabel: z.string().optional(),
+    caseStudy: caseStudyMetadataSchema.optional(),
     displayOrder: z.number().int().nonnegative().default(100)
   })
 });

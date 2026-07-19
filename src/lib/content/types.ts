@@ -3,6 +3,8 @@ export const disciplines = [
   "Frontend Engineering",
   "Backend Systems",
   "Backend Architecture",
+  "Product Delivery",
+  "Data Systems",
   "Backend Services",
   "Data Engineering",
   "Health Data",
