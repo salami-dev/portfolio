@@ -40,10 +40,91 @@ test("work page renders the complete project card set", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Audicin Web/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Bridger/ })).toBeVisible();
   const audicinV2Card = page.locator("article").filter({ has: page.getByRole("heading", { name: "Audicin V2" }) }).first();
-  await expect(audicinV2Card).toContainText("Audicin is an audio-health product");
+  await expect(audicinV2Card).toContainText("original CMS-backed application");
   await expect(audicinV2Card).toContainText("Impact:");
-  await expect(audicinV2Card).toContainText("Key challenge:");
+  await expect(audicinV2Card).not.toContainText("Key challenge:");
   await expect(page.getByRole("heading", { name: "Sproutly Mobile" })).toBeVisible();
+});
+
+test("Audicin V2 renders as a live product and platform replacement", async ({ page }) => {
+  await page.goto("/work/");
+
+  const audicinV2Card = page.locator("[data-project-card]").filter({
+    has: page.getByRole("heading", { name: "Audicin V2" })
+  });
+
+  await expect(audicinV2Card).toContainText("Audicin’s original CMS-backed application had become difficult to extend");
+  await expect(audicinV2Card).toContainText("promoted to CTO as delivery began");
+  await expect(audicinV2Card).toContainText("migrated the live product with negligible interruption");
+  await expect(audicinV2Card).not.toContainText("Key challenge:");
+
+  await audicinV2Card.getByRole("link", { name: "Read the case study" }).click();
+  await expect(page).toHaveURL(/\/work\/audicin-v2\/$/);
+
+  await expect(page.getByRole("heading", { level: 1, name: "Audicin V2" })).toBeVisible();
+  await expect(page.getByText("Rebuilding a live product for personalization and measurable outcomes")).toBeVisible();
+
+  const projectFacts = page.locator("[data-project-facts]");
+  await expect(projectFacts).toContainText("Software Engineer → CTO");
+  await expect(projectFacts).toContainText("January–August 2025");
+  await expect(projectFacts).toContainText("Three engineers across backend, Android, and iOS");
+  await expect(projectFacts).toContainText("Product definition, architecture, migration, subscriptions, analytics, data pipelines, infrastructure, internal tooling, and engineering leadership");
+
+  for (const heading of [
+    "Why V2 was necessary",
+    "Replacing the live platform",
+    "Separating authentication from access",
+    "Redesigning subscription and legal state",
+    "Measuring actual listening behaviour",
+    "Health data and the Audicin Sleep Score",
+    "Rebuilding delivery and production operations",
+    "Replacing the CMS administration layer",
+    "Product and mobile delivery",
+    "Engineering leadership",
+    "Outcome",
+    "Reflection"
+  ]) {
+    await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+  }
+
+  await expect(page.getByRole("heading", { name: "What I owned" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Collaborated with" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Key decisions" })).toBeVisible();
+  await expect(page.getByText("provider-agnostic entitlement model")).toBeVisible();
+  await expect(page.getByText("Audicin Sleep Score", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("AWS CodeDeploy", { exact: true }).first()).toBeVisible();
+
+  const pageCopy = await page.locator("main").innerText();
+  expect(pageCopy).toContain("formal delivery in February 2025");
+  expect(pageCopy).toContain("launched toward the end of August 2025");
+  expect(pageCopy).toContain("The mobile engineers implemented their respective clients");
+  expect(pageCopy).toContain("A UI designer produced the final screen designs");
+  expect(pageCopy).toContain("The chief scientist and researchers defined the underlying scoring logic");
+  expect(pageCopy).toContain("The CEO retained final approval from the business side");
+  expect(pageCopy).not.toMatch(/Kubernetes|\bEKS\b|\bAKS\b/);
+  expect(pageCopy).not.toMatch(/wellness score|Sleep nScore|\bnScore\b/i);
+  expect(pageCopy).not.toContain("health-tech data-platform rebuild");
+  expect(pageCopy).not.toContain("audio-health product");
+});
+
+test("Audicin V2 remains accessible and contained at narrow and wide widths", async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1600, height: 1000 }
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/work/audicin-v2/");
+
+    const hasHorizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+    );
+    expect(hasHorizontalOverflow).toBe(false);
+  }
+
+  await expect(page.getByRole("figure", { name: /Audicin V2 system architecture/ })).toBeVisible();
+  await page.addScriptTag({ content: axe.source });
+  const results = await page.evaluate(async () => await window.axe.run(document));
+  expect(results.violations).toEqual([]);
 });
 
 test("project story pages support images and fallback media", async ({ page }) => {
